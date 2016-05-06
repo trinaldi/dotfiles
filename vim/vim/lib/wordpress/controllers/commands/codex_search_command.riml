@@ -1,0 +1,58 @@
+riml_include 'wordpress_command'
+riml_include 'msg'
+
+class CodexSearchCommand < WordPressCommand
+  def initialize(container)
+    super(container)
+    self.is_codex_search_command = true
+  end
+
+  defm get_name
+    return 'Wcodexsearch'
+  end
+
+  defm get_bang
+    return false
+  end
+
+  defm get_auto_register
+    return true
+  end
+
+  defm get_range
+    return true
+  end
+
+  defm has_ex_mode
+    return true
+  end
+
+  defm run(*args)
+    [params, opts] = self.expand_args(args)
+    current_word = self.get_current_word(params, opts)
+
+    if self.has_open_browser()
+      search_query = self.get_codex_query(current_word)
+      execute(":OpenBrowser #{search_query}")
+    else
+      echo_error("Error: OpenBrowser.vim plugin was not found.")
+    end
+  end
+
+  defm get_codex_query(query)
+    return "http://wordpress.org/search/#{query}"
+  end
+
+  defm has_open_browser
+    return exists(':OpenBrowser') == 2
+  end
+
+  " TODO: remove this, OpenBrowser already does urlencoding
+  defm urlencode(query)
+    if has('python')
+      return execute(":python import urllib; print urllib.quote_plus('#{query}')")
+    else
+      return query
+    end
+  end
+end

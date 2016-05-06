@@ -1,0 +1,5 @@
+{
+    "require": {
+        "phpdocumentor/phpdocumentor": "v2.7.0"
+    }
+}

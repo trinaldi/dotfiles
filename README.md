@@ -1,6 +1,6 @@
 # dotfiles
 ---
-My dotfiles as of `05/06/2016`
+My dotfiles as of `29/11/2017`
 
 Some of which include:
 
@@ -24,3 +24,4 @@ Some of which include:
 ## WeeChat
 - Plugins
 - General config
+- Build with: `./configure --with-aspell --with-curl --with-python --with-perl --with-ruby --with-lua --with-guile`

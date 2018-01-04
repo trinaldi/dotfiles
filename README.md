@@ -1,6 +1,6 @@
 # dotfiles
 ---
-My dotfiles as of `28/12/2017`
+My dotfiles as of `04/01/2018`
 
 Some of which include:
 

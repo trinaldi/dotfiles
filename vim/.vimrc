@@ -1,12 +1,24 @@
 syntax on
+set hidden
 set number
 set nocompatible
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsListSnippets="<c-tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-"let g:UltiSnipsUsePythonVersion = 3
-"let g:UltiSnipsEditSplit = "vertical"
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+    source ~/.vimrc_background
+endif
+let g:esearch = {
+  \ 'adapter':    'grep',
+  \ 'backend':    'vim8',
+  \ 'out':        'win',
+  \ 'batch_size': 1000,
+  \ 'use':        ['visual', 'hlsearch', 'last'],
+  \}
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsEditSplit = "vertical"
 inoremap <c-x><c-k> <c-x><c-k>
 let g:indent_guides_auto_colors = 0
 " Fix home/end key in all modes
@@ -16,11 +28,12 @@ imap <esc>OH <home>
 map <esc>OF <end>
 cmap <esc>OF <end>
 imap <esc>OF <end>
-
+au VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
 " Colors {{{
 syntax enable " enable syntax processing
-colorscheme Monokai
-"set background=dark
+let base16colorspace=256
+colorscheme base16-seti
+set background=dark
 set t_Co=256
 set term=screen-256color
 "set term=xterm
@@ -31,9 +44,9 @@ set ttyfast " faster redraw
 set backspace=indent,eol,start
 " }}}
 " Spaces & Tabs {{{
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set expandtab
 set modelines=1
 set colorcolumn=110
@@ -41,7 +54,6 @@ highlight ColorColumn ctermbg=darkgray
 filetype indent on
 filetype plugin on
 set autoindent
-let g:pydiction_location = '/home/user/.vim/bundle/pydiction/complete-dict'
 set dictionary+=~/.vim/bundle/bootstrap-snippets/dictionary
 set complete+=k
 " }}}
@@ -50,7 +62,7 @@ set number " show line numbers
 set showcmd " show command in bottom bar
 set cursorline " highlight current line
 set wildmenu
-"set lazyredraw
+set lazyredraw
 set showmatch " higlight matching parenthesis
 " }}}
  " Searching {{{
@@ -73,34 +85,21 @@ nnoremap k gk
 "nnoremap E $
 "nnoremap $ <nop>
 "nnoremap ^ <nop>
-"nnoremap gV `[v`]
-"onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
-"xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
-"onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
-"xnoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
-"onoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
-"xnoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
-"onoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
-"xnoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
+nnoremap gV `[v`]
 "  }}}
 " Leader Shortcuts {{{
 let mapleader=","
 nnoremap <leader>m :silent make\|redraw!\|cw<CR>
 nnoremap <leader>w :NERDTree<CR>
-nnoremap <leader>u :GundoToggle<CR>
-nnoremap <leader>h :A<CR>
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>ez :vsp ~/.zshrc<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
-"nnoremap <leader>l :call ToggleNumber()<CR>
 nnoremap <leader><space> :noh<CR>
 nnoremap <leader>s :mksession<CR>
 nnoremap <leader>a :Ag
 nnoremap <leader>c :SyntasticCheck<CR>:Errors<CR>
 nnoremap <leader>1 :set number!<CR>
 nnoremap <leader>d :Make!
-nnoremap <leader>r :call RunTestFile()<CR>
-nnoremap <leader>g :call RunGoFile()<CR>
 vnoremap <leader>y "+y
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -147,7 +146,7 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
 " }}}
 " NERDTree {{{
-let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
+let NERDTreeIgnore = ['\.pyc$', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
 " }}}
 " Syntastic {{{
 let g:syntastic_python_flake8_args='--ignore=E501'
@@ -178,14 +177,6 @@ autocmd BufEnter *.sh,*.rb setlocal softtabstop=2
 au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 augroup END
 " Custom Functions {{{
-function! ToggleNumber()
-if(&relativenumber == 1)
-set norelativenumber
-set number
-else
-set relativenumber
-endif
-endfunc
 function! RunTestFile()
 if(&ft=='python')
 exec ":!" . ". venv/bin/activate; nosetests " .bufname('%') . " --stop"
@@ -255,3 +246,42 @@ function! s:NextTextObject(motion, dir)
 "let g:syntastic_always_populate_loc_list = 1
 "let g:ycm_collect_identifiers_from_tags_files = 1
 "set tags+=./.tags
+" Airline
+ if !exists('g:airline_symbols')
+   let g:airline_symbols = {}
+ endif
+ " unicode symbols
+ let g:airline_left_sep = '»'
+ let g:airline_left_sep = '▶'
+ let g:airline_right_sep = '«'
+ let g:airline_right_sep = '◀'
+ let g:airline_symbols.crypt = '🔒'
+ let g:airline_symbols.linenr = '␊'
+ let g:airline_symbols.linenr = '␤'
+ let g:airline_symbols.linenr = '¶'
+ let g:airline_symbols.branch = '⎇'
+ let g:airline_symbols.paste = 'ρ'
+ let g:airline_symbols.paste = 'Þ'
+ let g:airline_symbols.paste = '∥'
+ let g:airline_symbols.whitespace = 'Ξ'
+ " powerline symbols
+ let g:airline_left_sep = ''
+ let g:airline_left_alt_sep = ''
+ let g:airline_right_sep = ''
+ let g:airline_right_alt_sep = ''
+ let g:airline_symbols.branch = ''
+ let g:airline_symbols.readonly = ''
+ let g:airline_symbols.linenr = ''
+ " old vim-powerline symbols
+ let g:airline_left_sep = '⮀'
+ let g:airline_left_alt_sep = '⮁'
+ let g:airline_right_sep = '⮂'
+ let g:airline_right_alt_sep = '⮃'
+ let g:airline_symbols.branch = '⭠'
+ let g:airline_symbols.readonly = '⭤'
+ let g:airline_symbols.linenr = '⭡'
+ let g:jsx_ext_required = 0
+ let g:xml_syntax_folding = 1
+ let g:javascript_plugin_jsdoc = 1
+ let g:user_emmet_mode='a'
+ let g:user_emmet_leader_key='<C-Z>'

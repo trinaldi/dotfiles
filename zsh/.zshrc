@@ -7,8 +7,8 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="honukai"
-
+ZSH_THEME="simple"  # "honukai"
+export USE_CCACHE=1
 unsetopt auto_cd
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
@@ -52,7 +52,7 @@ CASE_SENSITIVE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(ubuntu colored-man-pages  colorize pip emoji git python ruby rails)
+plugins=(ubuntu git)
 
 # User configuration
 
@@ -98,7 +98,6 @@ alias mpvg='/home/tiago/bin/mpv-build/mpv/build/mpv -vo=opengl-hq -hwdec=vaapi'
 alias mpvi='/home/tiago/bin/mpv-build/mpv/build/mpv -vo=opengl-hq:interpolation -hwdec=vaapi --video-sync=display-resample'
 alias mpva='/home/tiago/bin/mpv-build/mpv/build/mpv -vo=vaapi -hwdec=vaapi'
 alias mpvyt='/home/tiago/bin/mpv-build/mpv/build/mpv -vo=opengl-hq -hwdec=vaapi --ytdl-format=bestvideo[ext=mp4]+bestaudio[ext=m4a]'
-alias node='nodejs'
 alias subl='/home/tiago/bin/sublime_text_3/sublime_text %F'
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Projects/go
@@ -107,4 +106,20 @@ export PATH=$PATH:$GOPATH/bin
 [ -s "/home/tiago/.dnx/dnvm/dnvm.sh" ] && . "/home/tiago/.dnx/dnvm/dnvm.sh" # Load dnvm
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-export PATH="$HOME/.composer/vendor/bin:$PATH" 
+export PATH="$HOME/.composer/vendor/bin:$PATH"
+
+export NVM_DIR="/home/tiago/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+
+# Android SDK Config
+export ANDROID_HOME=/opt/android-sdk
+export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+
+#GPG Key
+export GPGKEY=263E65BA
+export NODE_PATH=$NODE_PATH:/home/tiago/.nvm/versions/node/v8.4.0/lib/node_modules
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1"  ] && [ -s $BASE16_SHELL/profile_helper.sh  ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

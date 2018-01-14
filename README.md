@@ -1,6 +1,6 @@
 # dotfiles
 ---
-My dotfiles as of `04/01/2018`
+My dotfiles as of `14/01/2018`
 
 Some of which include:
 
@@ -28,3 +28,4 @@ Some of which include:
 ## Misc
 - Build configuration for ffmpeg
 - No tear fix for GNOME
+- Fira Mono Medium for Powerline font

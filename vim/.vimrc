@@ -1,8 +1,18 @@
+execute pathogen#infect()
+set rtp+=~/.fzf
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 syntax on
-set noswapfile
 set hidden
 set number
 set nocompatible
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+    source ~/.vimrc_background
+endif
+" for tmuxline + vim-airline integration
+let g:airline#extensions#tmuxline#enabled = 1
+" " start tmuxline even without vim running
+let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 let g:esearch = {
   \ 'adapter':    'grep',
   \ 'backend':    'vim8',
@@ -10,9 +20,14 @@ let g:esearch = {
   \ 'batch_size': 1000,
   \ 'use':        ['visual', 'hlsearch', 'last'],
   \}
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsEditSplit = "vertical"
 inoremap <c-x><c-k> <c-x><c-k>
-let g:indent_guides_auto_colors = 1
-set pastetoggle=<F2>
+let g:indent_guides_auto_colors = 0
 " Fix home/end key in all modes
 map <esc>OH <home>
 cmap <esc>OH <home>
@@ -20,13 +35,11 @@ imap <esc>OH <home>
 map <esc>OF <end>
 cmap <esc>OF <end>
 imap <esc>OF <end>
+au VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
 " Colors {{{
 syntax enable " enable syntax processing
 let base16colorspace=256
 colorscheme base16-seti
-let g:airline_theme='base16'
-let g:airline#extensions#tmuxline#enabled = 1
-let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 set background=dark
 set t_Co=256
 set term=screen-256color
@@ -83,14 +96,17 @@ nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>ez :vsp ~/.zshrc<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader><space> :noh<CR>
+nnoremap <leader>s :mksession<CR>
 nnoremap <leader>a :Ag
+nnoremap <leader>c :SyntasticCheck<CR>:Errors<CR>
+nnoremap <leader>l :call StripTrailingWhitespaces()<CR>
 nnoremap <leader>1 :set number!<CR>
+nnoremap <leader>d :Make!
 vnoremap <leader>y "+y
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 inoremap jk <esc>
 
-" }}}
 " Powerline {{{
 "set encoding=utf-8
 "python from powerline.vim import setup as powerline_setup
@@ -120,7 +136,6 @@ let g:syntastic_ignore_files = ['.java$']
 " L aunch Config {{{
 runtime! debian.vim
 set nocompatible
-call pathogen#infect()
 " }}}
 " AutoGroups {{{
 let g:jedi#use_splits_not_buffers = "left"
@@ -136,9 +151,35 @@ autocmd VimEnter * highlight clear SignColumn
 autocmd BufEnter *.cls setlocal filetype=java
 autocmd BufEnter *.zsh-theme setlocal filetype=zsh
 autocmd BufEnter Makefile setlocal noexpandtab
+autocmd BufEnter *.sh,*.rb setlocal tabstop=2
+autocmd BufEnter *.sh,*.rb setlocal shiftwidth=2
+autocmd BufEnter *.sh,*.rb setlocal softtabstop=2
 au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 augroup END
 " Custom Functions {{{
+function! RunTestFile()
+if(&ft=='python')
+exec ":!" . ". venv/bin/activate; nosetests " .bufname('%') . " --stop"
+endif
+endfunction
+function! RunGoFile()
+if(&ft=='go')
+exec ":new|0read ! go run " . bufname('%')
+endif
+endfunction
+function! RunTestsInFile()
+if(&ft=='php')
+:execute "!" . "/Users/dblack/pear/bin/phpunit -d memory_limit=512M -c
+/usr/local/twilio/src/php/tests/config.xml --bootstrap
+/usr/local/twilio/src/php/tests/bootstrap.php " . bufname('%') . ' \| grep
+-v Configuration \| egrep -v "^$" '
+ elseif(&ft=='go')
+ exec ":!gp test"
+ elseif(&ft=='python')
+ exec ":read !" . ". venv/bin/activate; nosetests " . bufname('%') . "
+ --nocapture"
+ endif
+ endfunction
  " strips trailing whitespace at the end of files. this
 "  " is called on buffer write in the autogroup above.
 function! <SID>StripTrailingWhitespaces()
@@ -224,5 +265,4 @@ function! s:NextTextObject(motion, dir)
  let g:javascript_plugin_jsdoc = 1
  let g:user_emmet_mode='a'
  let g:user_emmet_leader_key='<C-Z>'
-
- set runtimepath^=~/.vim/bundle/ctrlp.vim
+set runtimepath^=~/.vim/bundle/ag

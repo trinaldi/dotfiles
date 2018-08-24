@@ -13,6 +13,8 @@ let g:esearch = {
       \ 'use':        ['visual', 'hlsearch', 'last'],
       \}
 inoremap <c-x><c-k> <c-x><c-k>
+let g:javascript_plugin_jsdoc = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_react = 1
 let g:indent_guides_auto_colors = 1
 set pastetoggle=<F2>
 " Fix home/end key in all modes
@@ -23,10 +25,11 @@ map <esc>OF <end>
 cmap <esc>OF <end>
 imap <esc>OF <end>
 " Colors {{{
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-    source ~/.vimrc_background
-endif
+colorscheme gruvbox
+"if filereadable(expand("~/.vimrc_background"))
+"  let base16colorspace=256
+"    source ~/.vimrc_background
+"endif
 let g:airline_extensions = []
 let g:airline_theme="base16"
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
@@ -167,7 +170,13 @@ let g:HardMode_hardmodeMsg = "Don't use this!"
 autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 let g:jsx_ext_required = 0
 let g:xml_syntax_folding = 1
+let g:javascript_plugin_flow = 1
 let g:javascript_plugin_jsdoc = 1
 let g:user_emmet_mode='a'
 let g:user_emmet_leader_key='<C-Z>'
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
 set runtimepath^=~/.vim/bundle/ag

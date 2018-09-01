@@ -1,6 +1,6 @@
 # dotfiles
 ---
-My dotfiles as of `2018-06-10`
+My dotfiles as of `2018-09-01`
 
 Some of which include:
 
@@ -29,3 +29,6 @@ Some of which include:
 - Build configuration for ffmpeg
 - No tear fix for GNOME
 - Fira Mono Medium for Powerline font
+
+## Nginx
+- Example `.conf` file for WordPress subfolder and friendly link

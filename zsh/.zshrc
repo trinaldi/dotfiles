@@ -2,12 +2,15 @@
 export VDPAU_DRIVER=va_gl
 export LIBVA_DRIVER_NAME=i965
 export ZSH=$HOME/.oh-my-zsh
+export EDITOR=vim
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="simple"  # "honukai"
+ZSH_THEME="pygmalion"  # "honukai"
+SPACESHIP_PROMPT_ADD_NEWLINE=false
+SPACESHIP_PROMPT_SEPARATE_LINE=false
 export USE_CCACHE=1
 unsetopt auto_cd
 # Uncomment the following line to use case-sensitive completion.
@@ -20,14 +23,18 @@ CASE_SENSITIVE="true"
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# Uncomment the following line to change how often to auto-update (in damuse).
+# export UPDATE_ZSH_DAmuse=13
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
+
+# Skip forward/back a word with opt-arrow
+bindkey '[C' forward-word
+bindkey '[D' backward-word
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -52,8 +59,7 @@ CASE_SENSITIVE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(ubuntu git)
-
+plugins=(git)
 # User configuration
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -94,32 +100,29 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 alias ls='ls --color=auto'
-alias mpvg='/home/tiago/bin/mpv-build/mpv/build/mpv -vo=opengl-hq -hwdec=vaapi'
-alias mpvi='/home/tiago/bin/mpv-build/mpv/build/mpv -vo=opengl-hq:interpolation -hwdec=vaapi --video-sync=display-resample'
-alias mpva='/home/tiago/bin/mpv-build/mpv/build/mpv -vo=vaapi -hwdec=vaapi'
-alias mpvyt='/home/tiago/bin/mpv-build/mpv/build/mpv -vo=opengl-hq -hwdec=vaapi --ytdl-format=bestvideo[ext=mp4]+bestaudio[ext=m4a]'
-alias subl='/home/tiago/bin/sublime_text_3/sublime_text %F'
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$HOME/Projects/go
-export PATH=$PATH:$GOPATH/bin
-
-[ -s "/home/tiago/.dnx/dnvm/dnvm.sh" ] && . "/home/tiago/.dnx/dnvm/dnvm.sh" # Load dnvm
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-export PATH="$HOME/.composer/vendor/bin:$PATH"
 
 export NVM_DIR="/home/tiago/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-
-# Android SDK Config
-export ANDROID_HOME=/opt/android-sdk
-export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-
-#GPG Key
-export GPGKEY=263E65BA
-export NODE_PATH=$NODE_PATH:/home/tiago/.nvm/versions/node/v8.4.0/lib/node_modules
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1"  ] && [ -s $BASE16_SHELL/profile_helper.sh  ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$PATH:$HOME/go/bin"
+export PATH="$HOME/.config/composer/vendor/bin:$PATH"
+
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1"  ] && \
+[ -s "$BASE16_SHELL/profile_helper.sh"  ] && \
+eval "$("$BASE16_SHELL/profile_helper.sh")"
+
+if command -v tmux>/dev/null; then
+  [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux -2
+fi
+
+# WP-CLI
+autoload bashcompinit
+bashcompinit
+source /home/tiago/bin/wp/wp-completion.bash

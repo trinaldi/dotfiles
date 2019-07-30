@@ -1,4 +1,4 @@
-# Quick fix for tearing on GNOME:
+# Quick fix for tearing on GNOME (< 3.22):
 * Open `looking glass` pressing `ALT+F2` then `lg`
 * Type:
 * `Meta.disable_unredirect_for_screen(global.screen)`

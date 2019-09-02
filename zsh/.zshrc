@@ -8,12 +8,17 @@ export EDITOR=vim
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"  # "honukai"
+ZSH_THEME="muse"  # "honukai"
+AGKOZAK_COLORS_BRANCH_STATUS=248
+AGKOZAK_MULTILINE=0
+AGKOZAK_PROMPT_CHAR=( ➙ %# : )
+# Make the unicode prompt character red when superuser
+# and reversed when in vi command mode
+# Git status
 export USE_CCACHE=1
 unsetopt auto_cd
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
-
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
@@ -98,6 +103,7 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 alias ls='ls --color=auto'
+alias weather='curl wttr.in'
 
 export NVM_DIR="/home/tiago/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -122,22 +128,22 @@ fi
 
 _gen_fzf_default_opts() {
 
-local color00='#282a36'
-local color01='#34353e'
-local color02='#43454f'
-local color03='#78787e'
-local color04='#a5a5a9'
-local color05='#e2e4e5'
-local color06='#eff0eb'
-local color07='#f1f1f0'
-local color08='#ff5c57'
-local color09='#ff9f43'
-local color0A='#f3f99d'
-local color0B='#5af78e'
-local color0C='#9aedfe'
-local color0D='#57c7ff'
-local color0E='#ff6ac1'
-local color0F='#b2643c'
+local color00='#263238'
+local color01='#2C393F'
+local color02='#37474F'
+local color03='#707880'
+local color04='#C9CCD3'
+local color05='#CDD3DE'
+local color06='#D5DBE5'
+local color07='#FFFFFF'
+local color08='#EC5F67'
+local color09='#EA9560'
+local color0A='#FFCC00'
+local color0B='#8BD649'
+local color0C='#80CBC4'
+local color0D='#89DDFF'
+local color0E='#82AAFF'
+local color0F='#EC5F67'
 
 export FZF_DEFAULT_OPTS="
   --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D

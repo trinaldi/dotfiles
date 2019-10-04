@@ -9,9 +9,6 @@ export EDITOR=vim
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="muse"  # "honukai"
-AGKOZAK_COLORS_BRANCH_STATUS=248
-AGKOZAK_MULTILINE=0
-AGKOZAK_PROMPT_CHAR=( ➙ %# : )
 # Make the unicode prompt character red when superuser
 # and reversed when in vi command mode
 # Git status

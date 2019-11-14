@@ -1,8 +1,6 @@
 # dotfiles
 
-My dotfiles as of `2019-10-04`
-
-Some of which include:
+My dotfiles as of `2019-11-14`
 
 ## VIM:
 - .vimrc
@@ -32,3 +30,9 @@ Some of which include:
 
 ## Nginx
 - Example `.conf` file for WordPress subfolder and friendly link
+
+## i3
+- `config` file for [i3-gaps-rounded](https://github.com/resloved/i3) but it works with regular `i3` and `i3` gaps (assuming you remove/comment the specific lines for said `i3` flavor)
+
+## polybar
+`config` based on the repo [`polybar-themes`](https://github.com/adi1090x/polybar-themes). I'm using a modfied version "polybar-6"

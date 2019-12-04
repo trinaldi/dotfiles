@@ -1,6 +1,6 @@
 # dotfiles
 
-My dotfiles as of `2019-11-14`
+My dotfiles as of `2019-12-03`
 
 ## VIM:
 - .vimrc
@@ -35,4 +35,7 @@ My dotfiles as of `2019-11-14`
 - `config` file for [i3-gaps-rounded](https://github.com/resloved/i3) but it works with regular `i3` and `i3` gaps (assuming you remove/comment the specific lines for said `i3` flavor)
 
 ## polybar
-`config` based on the repo [`polybar-themes`](https://github.com/adi1090x/polybar-themes). I'm using a modfied version "polybar-6"
+- `config` based on the repo [`polybar-themes`](https://github.com/adi1090x/polybar-themes). I'm using a modfied version "polybar-6"
+
+## picon (a.k.a compton)
+- `conf` file for [compton](https://aur.archlinux.org/packages/compton-tryone-git/) - tryone's patched fork of compton with kawase blur, actually 

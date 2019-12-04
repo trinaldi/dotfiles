@@ -37,5 +37,5 @@ My dotfiles as of `2019-12-03`
 ## polybar
 - `config` based on the repo [`polybar-themes`](https://github.com/adi1090x/polybar-themes). I'm using a modfied version "polybar-6"
 
-## picon (a.k.a compton)
+## picom (a.k.a compton)
 - `conf` file for [compton](https://aur.archlinux.org/packages/compton-tryone-git/) - tryone's patched fork of compton with kawase blur, actually 

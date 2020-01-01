@@ -1,6 +1,6 @@
 # dotfiles
 
-My dotfiles as of `2019-12-03`
+My dotfiles as of `2019-12-31`
 
 ## VIM:
 - .vimrc
@@ -39,3 +39,6 @@ My dotfiles as of `2019-12-03`
 
 ## picom (a.k.a compton)
 - `conf` file for [compton](https://aur.archlinux.org/packages/compton-tryone-git/) - tryone's patched fork of compton with kawase blur, actually 
+
+## Misc
+- Rum `# sync; echo 3 > /proc/sys/vm/drop_caches` in order to free _some_ memory.

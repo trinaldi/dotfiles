@@ -1,7 +1,6 @@
 ag.vim
 auto-pairs
 base16-vim
-ctrlp.vim
 emmet-vim
 fzf
 goyo.vim
@@ -22,3 +21,4 @@ vim-json
 vim-jsx
 vim-lion
 vim-ripgrep
+vim-surround

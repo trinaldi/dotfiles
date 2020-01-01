@@ -41,4 +41,4 @@ My dotfiles as of `2019-12-31`
 - `conf` file for [compton](https://aur.archlinux.org/packages/compton-tryone-git/) - tryone's patched fork of compton with kawase blur, actually 
 
 ## Misc
-- Rum `# sync; echo 3 > /proc/sys/vm/drop_caches` in order to free _some_ memory.
+- Run `# sync; echo 3 > /proc/sys/vm/drop_caches` in order to free _some_ memory.

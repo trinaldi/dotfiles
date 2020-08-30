@@ -2,19 +2,27 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 autocmd VimEnter * hi Normal ctermbg=none
-
-set t_Co=256
-set noswapfile
+"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+"let g:ycm_keep_logfiles = 1
+"let g:ycm_log_level = 'debug'
+"let g:ycm_use_clangd = 1
+"let g:ycm_clangd_binary_path = 'clangd'
+"let g:ycm_enable_diagnostic_signs = 0
+"let g:ycm_enable_diagnostic_highlighting = 0
 set hidden
 set number
-set relativenumber
+"set relativenumber
 set nocompatible
-"
-" FINDING FILES:
-"
-" " Search down into subfolders
-" " Provides tab-completion for all file-related tasks
+
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
 set path+=**
+
+" Vertical Gdiff
+set diffopt+=vertical
+
+" Editorconfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 let g:esearch = {
       \ 'adapter':    'grep',
@@ -57,6 +65,7 @@ set colorcolumn=80
 highlight ColorColumn ctermbg=darkgray
 filetype indent on
 filetype plugin on
+autocmd FileType c,cpp,python,ruby setlocal shiftwidth=4 softtabstop=4 expandtab
 
 " UI Layout
 set showcmd
@@ -90,7 +99,7 @@ nnoremap <leader><space> :noh<CR>
 nnoremap <leader>a :Ag
 vnoremap <leader>y "+y
 inoremap jk <esc>
-
+"
 " NERDTree
 let NERDTreeIgnore = ['\.pyc$', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
 

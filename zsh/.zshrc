@@ -3,12 +3,12 @@ export VDPAU_DRIVER=va_gl
 export LIBVA_DRIVER_NAME=i965
 export ZSH=$HOME/.oh-my-zsh
 export EDITOR=vim
-
+export PYTHONSTARTUP="$(python -m jedi repl)"
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="muse"  # "honukai"
+ZSH_THEME="gentoo"  # "honukai"
 # Make the unicode prompt character red when superuser
 # and reversed when in vi command mode
 # Git status

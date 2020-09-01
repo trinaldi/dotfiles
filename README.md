@@ -1,6 +1,6 @@
 # dotfiles
 
-My dotfiles as of `2020-08-22`
+My dotfiles as of `2020-09-01`
 
 ## VIM:
 - .vimrc

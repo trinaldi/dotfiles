@@ -1,6 +1,6 @@
 # dotfiles
 
-My dotfiles as of `2020-09-01`
+My dotfiles as of `2020-09-06`
 
 ## VIM:
 - .vimrc
@@ -38,7 +38,7 @@ My dotfiles as of `2020-09-01`
 - `config` based on the repo [`polybar-themes`](https://github.com/adi1090x/polybar-themes). I'm using a modfied version "polybar-6"
 
 ## picom (a.k.a compton)
-- `conf` file for [compton](https://aur.archlinux.org/packages/compton-tryone-git/) - tryone's patched fork of compton with kawase blur, actually 
+- `conf` file for [compton](https://aur.archlinux.org/packages/compton-tryone-git/) - tryone's patched fork of compton with kawase blur, actually
 
 ## Misc
 - Run `# sync; echo 3 > /proc/sys/vm/drop_caches` in order to free _some_ memory.

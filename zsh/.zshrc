@@ -1,17 +1,21 @@
-# Path to your oh-my-zsh installation.
+# Initial Setup
+[ -z "$TMUX" ] && export TERM=xterm-256color
 export VDPAU_DRIVER=va_gl
 export LIBVA_DRIVER_NAME=i965
+#export AMD_VULKAN_ICD=RADV
+#export VDPAU_DRIVER=radeonsi
+#export LIBVA_DRIVER_NAME=radeonsi
 export ZSH=$HOME/.oh-my-zsh
 export EDITOR=vim
-export PYTHONSTARTUP="$(python -m jedi repl)"
+export MOZ_X11_EGL=1
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="gentoo"  # "honukai"
+ZSH_THEME="muse"  # "honukai"
 export USE_CCACHE=1
 unsetopt auto_cd
-# Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -27,7 +31,7 @@ CASE_SENSITIVE="true"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+#DISABLE_AUTO_TITLE="true"
 
 # Skip forward/back a word with opt-arrow
 bindkey '[C' forward-word
@@ -57,41 +61,22 @@ bindkey '[D' backward-word
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
-# User configuration
 
-export ANDROID_HOME=/home/tiago/Android/Sdk
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+## PATH declarations
+export PATH=$HOME/bin:/usr/local/bin:/home/tiago/.local/bin:$PATH
 export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="/opt/firefox:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+#Compilation flags
+export ARCHFLAGS="-arch x86_64"
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias tmux='tmux -2'
-alias ntp='sudo ntpdate 0.pool.ntp.org'
+## Aliases and Personal functions
+alias t2='tmux -2'
+alias ntp='sudo ntpdate -u pool.ntp.org'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -101,44 +86,34 @@ alias la='ls -A'
 alias ll='ls -alF'
 alias ls='ls --color=auto'
 alias weather='curl wttr.in'
+alias tobrl='/home/tiago/bin/projects/ruby/tobrl'
 
+function mcd() {
+  mkdir -p "$1"
+  cd "$1"
+}
+
+## FZF config
 [ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}"  ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-export PATH="$PATH:$HOME/go/bin"
-
-# Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        eval "$("$BASE16_SHELL/profile_helper.sh")"
-
-if command -v tmux>/dev/null; then
-  [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux -2
-fi
-
-# Base16 Snazzy
-# Author: Chawye Hsu (https://github.com/h404bi) based on Hyper Snazzy Theme (https://github.com/sindresorhus/hyper-snazzy)
-
+# Base16 Gruvbox dark, hard
 _gen_fzf_default_opts() {
 
-local color00='#282a36'
-local color01='#34353e'
-local color02='#43454f'
-local color03='#78787e'
-local color04='#a5a5a9'
-local color05='#e2e4e5'
-local color06='#eff0eb'
-local color07='#f1f1f0'
-local color08='#ff5c57'
-local color09='#ff9f43'
-local color0A='#f3f99d'
-local color0B='#5af78e'
-local color0C='#9aedfe'
-local color0D='#57c7ff'
-local color0E='#ff6ac1'
-local color0F='#b2643c'
+local color00='#1d2021'
+local color01='#3c3836'
+local color02='#504945'
+local color03='#665c54'
+local color04='#bdae93'
+local color05='#d5c4a1'
+local color06='#ebdbb2'
+local color07='#fbf1c7'
+local color08='#fb4934'
+local color09='#fe8019'
+local color0A='#fabd2f'
+local color0B='#b8bb26'
+local color0C='#8ec07c'
+local color0D='#83a598'
+local color0E='#d3869b'
+local color0F='#d65d0e'
 
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
 " --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D"\
@@ -149,24 +124,22 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
 
 _gen_fzf_default_opts
 
-function mcd() {
-  mkdir -p "$1"
-  cd "$1"
-}
+## NVM
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}"  ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-# Created by `userpath` on 2020-08-14 19:23:13
-export PATH="$PATH:/home/tiago/.local/bin"
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+## Base16 Shell config
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Start TMUX Session everytime
+[ -x "$(command -v tmux)" ] \
+  && [ -z "${TMUX}" ] \
+  && (tmux attach || tmux ) >/dev/null 2>&1
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+
+
+eval "$(rbenv init -)"

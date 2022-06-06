@@ -15,8 +15,8 @@ set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Terminus (TTF) 9
-
+#font pango:Ubuntu Mono derivative Powerline 9
+font pango:DejaVu Sans Mono 9
 # Make the currently focused window a scratchpad
 bindsym $mod+minus move scratchpad
 
@@ -41,7 +41,7 @@ bindsym $mod+grave workspace back_and_forth
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec st
+bindsym $mod+Return exec xterm
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -51,7 +51,7 @@ bindsym $mod+Shift+q kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec --no-startup-id "rofi -show drun -show-icons"
+bindsym $mod+d exec --no-startup-id "rofi -show drun -show-icons -font 'hack 10' -theme gruvbox-dark-hard"
 
 # change focus
 bindsym $mod+j focus left
@@ -182,21 +182,31 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute `pacmd list-sinks
 #bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 #bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 # Brightness
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 10
 
-exec --no-startup-id feh --bg-fill /home/tiago/Documents/wall.jpg
+# Media player controls
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+# Autoexec & shortcuts
+#exec --no-startup-id feh --bg-fill /home/tiago/Documents/wall.jpg
+exec --no-startup-id hsetroot -solid "#282828"
 exec --no-startup-id guake
 exec --no-startup-id redshift-gtk
+#exec --no-startup-id xautolock -time 5 -locker "i3lock --color=293241" &
 bindsym $mod+p exec pavucontrol
-bindsym $mod+m exec i3lock --color=000000
-exec_always --no-startup-id "/usr/bin/compton --config /home/tiago/.config/compton/compton.conf"
+#bindsym $mod+m exec --no-startup-id  betterlockscreen -l #/usr/share/sddm/themes/Elegant/background.jpg
+bindsym $mod+m exec --no-startup-id  betterlockscreen -l color
+bindsym Print  exec flameshot full -c
 exec_always --no-startup-id "setxkbmap -option caps:escape"
+exec_always --no-startup-id "/usr/bin/compton --config /home/tiago/.config/compton/compton.conf"
+#exec_always --no-startup-id "/usr/bin/compton -CGb --config /dev/null  --backend glx  --experimental-backend --unredir-if-possible --vsync --no-fading-openclose"
+#exec_always --no-startup-id "xcompmgr -c -C -o.55 &"
 for_window [class="guake"] floating enable
 for_window [class="VirtualBox Machine"] floating disable
 for_window [class="jetbrains-studio" title="^win\d+$"] focus
-#exec_always "/usr/bin/xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'"
-
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -206,8 +216,13 @@ bar {
 
   colors{
 
-    background #222222
+    background #282828
 
+    focused_workspace  #000000 #285577 #ffffff
+    active_workspace   #000000 #5f676a #ffffff
+    inactive_workspace #000000 #222222 #888888
+    urgent_workspace   #000000 #900000 #ffffff
+    binding_mode       #000000 #900000 #ffffff
   }
 
  status_command i3status
@@ -218,9 +233,9 @@ focus_follows_mouse no
 #exec_always --no-startup-id polybar -c ~/.config/polybar/config.ini main &
 # Set inner/outer gaps
 for_window [class=".*"] floating enable border pixel 1
-border_radius 3
-gaps inner 5
-gaps outer 5
+#border_radius 3
+#gaps inner 5
+#gaps outer 5
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>

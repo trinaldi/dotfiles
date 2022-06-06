@@ -2,13 +2,6 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 autocmd VimEnter * hi Normal ctermbg=none
-"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
-"let g:ycm_keep_logfiles = 1
-"let g:ycm_log_level = 'debug'
-"let g:ycm_use_clangd = 1
-"let g:ycm_clangd_binary_path = 'clangd'
-"let g:ycm_enable_diagnostic_signs = 0
-"let g:ycm_enable_diagnostic_highlighting = 0
 set hidden
 set number
 "set relativenumber
@@ -20,9 +13,6 @@ set path+=**
 
 " Vertical Gdiff
 set diffopt+=vertical
-
-" Editorconfig
-let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 let g:esearch = {
       \ 'adapter':    'grep',
@@ -65,8 +55,9 @@ set colorcolumn=80
 highlight ColorColumn ctermbg=darkgray
 filetype indent on
 filetype plugin on
-autocmd FileType c,cpp,python,ruby setlocal shiftwidth=4 softtabstop=4 expandtab
-
+autocmd FileType c,cpp,python setlocal shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 " UI Layout
 set showcmd
 set cursorline
@@ -91,12 +82,13 @@ nnoremap <space> za
 let mapleader=","
 nnoremap <leader>w :NERDTree<CR>
 silent! map <F5> :NERDTreeToggle<CR>
-let g:NERDTreeMapActivateNode="<F5>"
+silent! map <F6> :call RunNearestSpec()<CR>
+silent! map <F7> :call RunCurrentSpecFile()<CR>
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>ez :vsp ~/.zshrc<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader><space> :noh<CR>
-nnoremap <leader>a :Ag
+nnoremap <leader>a :Ack
 vnoremap <leader>y "+y
 inoremap jk <esc>
 "
@@ -117,6 +109,9 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ale_sign_error = '●' " Less aggressive than the default '>>'
 let g:ale_sign_warning = '.'
 let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
+function RspecOnLine()
+  !rspec %
+endfunction
 
 " Hardmode
 let g:HardMode_level = 'wannabe'
@@ -133,8 +128,11 @@ let g:user_emmet_settings = {
     \  },
   \}
 
-" The Silver Surfer
+" Ack.vim
 set runtimepath^=~/.vim/bundle/ag
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " air-line
 " required if using https://github.com/bling/vim-airline
@@ -170,3 +168,5 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
+
+highlight Comment cterm=italic

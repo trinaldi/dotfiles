@@ -46,10 +46,10 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 set backspace=indent,eol,start
 
 " Spaces & Tabs
+set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-set expandtab
 set modelines=2
 set colorcolumn=120
 highlight ColorColumn ctermbg=darkgray

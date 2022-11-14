@@ -51,7 +51,7 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 set modelines=2
-set colorcolumn=80
+set colorcolumn=120
 highlight ColorColumn ctermbg=darkgray
 filetype indent on
 filetype plugin on

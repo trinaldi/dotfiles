@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+FILE=plugins
+
+if [ -f "$FILE" ];then
+  rm "$FILE"
+fi
+
+echo */ | tr " " "\n" | sed -e 's/\///' >> "$FILE"

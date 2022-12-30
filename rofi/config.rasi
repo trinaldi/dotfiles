@@ -1,0 +1,6 @@
+configuration {
+ modi: "window,filebrowser";
+ font: "Source Code Pro 10";
+ combi-modi: "window,filebrowser";
+}
+@theme "gruvbox-dark-hard"

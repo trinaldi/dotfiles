@@ -1,5 +1,26 @@
 # Initial Setup
-[ -z "$TMUX" ] && export TERM=xterm-256color
+[ -z "$TMUX" ] && export TERM=screen-256color
+
+# Start TMUX Session everytime
+[ -x "$(command -v tmux)" ] \
+  && [ -z "${TMUX}" ] \
+  && (tmux attach || tmux ) >/dev/null 2>&1
+
+source ~/.zplug/init.zsh
+
+zplug chriskempson/base16-shell, from:github
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load
+
 export VDPAU_DRIVER=va_gl
 export LIBVA_DRIVER_NAME=i965
 #export AMD_VULKAN_ICD=RADV
@@ -69,6 +90,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="/opt/firefox:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source $ZSH/oh-my-zsh.sh
 
 #Compilation flags
@@ -87,59 +109,48 @@ alias ll='ls -alF'
 alias ls='ls --color=auto'
 alias weather='curl wttr.in'
 alias tobrl='/home/tiago/bin/projects/ruby/tobrl'
+alias yay='paru'
+alias yth264='mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080][fps<=30]+bestaudio[ext=m4a]"'
 
 function mcd() {
   mkdir -p "$1"
   cd "$1"
 }
 
-## FZF config
-[ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
-# Base16 Gruvbox dark, hard
-_gen_fzf_default_opts() {
+function tp_config() {
+  local TOUCHPAD="ETPS/2 Elantech Touchpad";
+  local ACCEL=$(xinput list-props $TOUCHPAD \
+                | grep Accel \
+                | awk '{gsub(/[():]/,"");print $4}' FS=' ' \
+                | head -n1);
+  local BTN_MAP=$(xinput list-props $TOUCHPAD \
+                  | grep 'Mapping Enabled' \
+                  | awk '{gsub(/[():]/,"");print $6}' FS=' ' \
+                  | head -n1);
 
-local color00='#1d2021'
-local color01='#3c3836'
-local color02='#504945'
-local color03='#665c54'
-local color04='#bdae93'
-local color05='#d5c4a1'
-local color06='#ebdbb2'
-local color07='#fbf1c7'
-local color08='#fb4934'
-local color09='#fe8019'
-local color0A='#fabd2f'
-local color0B='#b8bb26'
-local color0C='#8ec07c'
-local color0D='#83a598'
-local color0E='#d3869b'
-local color0F='#d65d0e'
+  xinput set-prop $TOUCHPAD $ACCEL 0.5
+  xinput set-prop $TOUCHPAD $BTN_MAP 1 0
 
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
-" --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D"\
-" --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C"\
-" --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D"
-
+  print 'Touchpad configured'
 }
 
-_gen_fzf_default_opts
+## FZF config
+[ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh
+
 
 ## NVM
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}"  ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-## Base16 Shell config
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        eval "$("$BASE16_SHELL/profile_helper.sh")"
-
-# Start TMUX Session everytime
-[ -x "$(command -v tmux)" ] \
-  && [ -z "${TMUX}" ] \
-  && (tmux attach || tmux ) >/dev/null 2>&1
-
-
-
+# Base16 Shell
+#BASE16_SHELL="$HOME/.config/base16-shell/"
+#[ -n "$PS1" ] && \
+#    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+#        eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 eval "$(rbenv init -)"
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -1,21 +1,28 @@
 # Initial Setup
-[ -z "$TMUX" ] && export TERM=screen-256color
+[ -z "$TMUX" ] && export TERM=tmux-256color
+
+case $- in *i*)
+  [ -z "$TMUX"  ] && exec tmux
+esac
+
+zvm_after_init_commands+=('[ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh')
 
 # Start TMUX Session everytime
-[ -x "$(command -v tmux)" ] \
-  && [ -z "${TMUX}" ] \
-  && (tmux attach || tmux ) >/dev/null 2>&1
+#[ -x "$(command -v tmux)" ] \
+#  && [ -z "${TMUX}" ] \
+#  && (tmux attach || tmux ) >/dev/null 2>&1
 
 source ~/.zplug/init.zsh
 
 zplug chriskempson/base16-shell, from:github
+zplug "jeffreytse/zsh-vi-mode"
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
 fi
 
 # Then, source plugins and add commands to $PATH
@@ -81,7 +88,10 @@ bindkey '[D' backward-word
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git vi-mode)
+MODE_INDICATOR="%F{red}NORMAL%f"
+ZVM_CURSOR_STYLE_ENABLED=false
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
 ## PATH declarations
 export PATH=$HOME/bin:/usr/local/bin:/home/tiago/.local/bin:$PATH
@@ -98,6 +108,7 @@ export ARCHFLAGS="-arch x86_64"
 
 ## Aliases and Personal functions
 alias t2='tmux -2'
+alias transpt='trans -t pt-BR '
 alias ntp='sudo ntpdate -u pool.ntp.org'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias egrep='egrep --color=auto'
@@ -120,19 +131,23 @@ function mcd() {
 function tp_config() {
   local TOUCHPAD="ETPS/2 Elantech Touchpad";
   local ACCEL=$(xinput list-props $TOUCHPAD \
-                | grep Accel \
-                | awk '{gsub(/[():]/,"");print $4}' FS=' ' \
-                | head -n1);
-  local BTN_MAP=$(xinput list-props $TOUCHPAD \
-                  | grep 'Mapping Enabled' \
-                  | awk '{gsub(/[():]/,"");print $6}' FS=' ' \
-                  | head -n1);
+    | grep Accel \
+    | awk '{gsub(/[():]/,"");print $4}' FS=' ' \
+    | head -n1);
+      local BTN_MAP=$(xinput list-props $TOUCHPAD \
+        | grep 'Mapping Enabled' \
+        | awk '{gsub(/[():]/,"");print $6}' FS=' ' \
+        | head -n1);
 
-  xinput set-prop $TOUCHPAD $ACCEL 0.5
-  xinput set-prop $TOUCHPAD $BTN_MAP 1 0
+      xinput set-prop $TOUCHPAD $ACCEL 0.5
+      xinput set-prop $TOUCHPAD $BTN_MAP 1 0
 
-  print 'Touchpad configured'
-}
+      if [ $? -eq 0 ]; then
+        print 'Touchpad configured'
+      else
+        echo "Oops, something went wrong"
+      fi
+    }
 
 ## FZF config
 [ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh

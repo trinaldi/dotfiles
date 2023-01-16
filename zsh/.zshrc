@@ -7,6 +7,10 @@ esac
 
 zvm_after_init_commands+=('[ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh')
 
+export FZF_CTRL_T_OPTS="
+  --preview 'bat -n --color=always {}'
+    --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
 # Start TMUX Session everytime
 #[ -x "$(command -v tmux)" ] \
 #  && [ -z "${TMUX}" ] \
@@ -122,6 +126,7 @@ alias weather='curl wttr.in'
 alias tobrl='/home/tiago/bin/projects/ruby/tobrl'
 alias yay='paru'
 alias yth264='mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080][fps<=30]+bestaudio[ext=m4a]"'
+alias cat='bat '
 
 function mcd() {
   mkdir -p "$1"

@@ -112,7 +112,7 @@ export ARCHFLAGS="-arch x86_64"
 
 ## Aliases and Personal functions
 alias t2='tmux -2'
-alias transpt='trans -t pt-BR '
+alias transpt='clear;trans -t pt-BR '
 alias ntp='sudo ntpdate -u pool.ntp.org'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias egrep='egrep --color=auto'

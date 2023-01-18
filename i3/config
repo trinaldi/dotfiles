@@ -15,8 +15,8 @@ set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:Ubuntu Mono derivative Powerline 9
-font pango:DejaVu Sans Mono 9
+font pango: Cascadia Mono Regular 10
+#font TerminessTTF Nerd Font Mono 9
 # Make the currently focused window a scratchpad
 bindsym $mod+minus move scratchpad
 
@@ -41,7 +41,7 @@ bindsym $mod+grave workspace back_and_forth
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec xterm
+bindsym $mod+Return exec kitty
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -51,7 +51,7 @@ bindsym $mod+Shift+q kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec --no-startup-id "rofi -show drun -show-icons -font 'hack 10' -theme gruvbox-dark-hard"
+bindsym $mod+d exec --no-startup-id "rofi -show drun -show-icons -font 'Cascadia Code Regular 10' -theme gruvbox-dark-hard"
 
 # change focus
 bindsym $mod+j focus left
@@ -191,17 +191,22 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # Autoexec & shortcuts
-#exec --no-startup-id feh --bg-fill /home/tiago/Documents/wall.jpg
-exec --no-startup-id hsetroot -solid "#282828"
+exec --no-startup-id feh --bg-fill /home/tiago/Documents/wall.jpg
+#exec --no-startup-id hsetroot -solid "#000000"
 exec --no-startup-id guake
 exec --no-startup-id redshift-gtk
 #exec --no-startup-id xautolock -time 5 -locker "i3lock --color=293241" &
 bindsym $mod+p exec pavucontrol
+bindsym $mod+y exec ytfzf -D
+bindsym $mod+t exec thunar
+bindsym $mod+z exec zathura
 #bindsym $mod+m exec --no-startup-id  betterlockscreen -l #/usr/share/sddm/themes/Elegant/background.jpg
 bindsym $mod+m exec --no-startup-id  betterlockscreen -l color
 bindsym Print  exec flameshot full -c
 exec_always --no-startup-id "setxkbmap -option caps:escape"
+exec_always --no-startup-id "xbindkeys"
 exec_always --no-startup-id "/usr/bin/compton --config /home/tiago/.config/compton/compton.conf"
+exec_always --no-startup-id "xset r rate 150 30"
 #exec_always --no-startup-id "/usr/bin/compton -CGb --config /dev/null  --backend glx  --experimental-backend --unredir-if-possible --vsync --no-fading-openclose"
 #exec_always --no-startup-id "xcompmgr -c -C -o.55 &"
 for_window [class="guake"] floating enable

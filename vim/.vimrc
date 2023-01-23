@@ -4,8 +4,15 @@ filetype plugin indent on
 autocmd VimEnter * hi Normal ctermbg=none
 set hidden
 set number
-"set relativenumber
+" set relativenumber
 set nocompatible
+set nobackup
+set nowb
+set noswapfile
+
+" Show tabs and trailing spaces
+set list
+set lcs=tab:»_,trail:·
 
 " Search down into subfolders
 " Provides tab-completion for all file-related tasks
@@ -36,32 +43,39 @@ imap <esc>OF <end>
 " Colors
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
-    source ~/.vimrc_background
+  source ~/.vimrc_background
 endif
 set background=dark
-hi LineNr term=bold cterm=bold ctermfg=2 guifg=Grey guibg=Grey90
+hi LineNr term=bold cterm=bold ctermfg=7
+hi CursorLine cterm=bold ctermbg=19
+hi CursorLineNr term=bold cterm=bold ctermfg=255
+hi ColorColumn ctermbg=8
+hi Comment ctermfg=13 ctermbg=0 cterm=bold
+
 " Misc
+
 set ttyfast
 set timeout timeoutlen=1000 ttimeoutlen=50
 set backspace=indent,eol,start
 
 " Spaces & Tabs
-set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
+set expandtab
 set modelines=2
-set colorcolumn=120
-highlight ColorColumn ctermbg=darkgray
+set colorcolumn=80
+
 filetype indent on
 filetype plugin on
-autocmd FileType c,cpp,python setlocal shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType c setlocal shiftwidth=8 softtabstop=8 expandtab
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
+
 " UI Layout
 set showcmd
 set cursorline
-hi CursorLineNr term=bold cterm=bold ctermfg=255 gui=bold
+
 set wildmenu
 set lazyredraw
 set showmatch
@@ -89,9 +103,12 @@ nnoremap <leader>ez :vsp ~/.zshrc<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader><space> :noh<CR>
 nnoremap <leader>a :Ack
+nnoremap <leader>t :GoTest<CR>
 vnoremap <leader>y "+y
+map <C-J> :bnext<CR>
+map <C-K> :bprev<CR>
 inoremap jk <esc>
-"
+
 " NERDTree
 let NERDTreeIgnore = ['\.pyc$', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
 
@@ -113,6 +130,19 @@ function RspecOnLine()
   !rspec %
 endfunction
 
+" JS Cleanup
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+"Workspace
+nnoremap <leader>s :ToggleWorkspace<CR>
+let g:workspace_create_new_tabs = 0
+
+" Indent Guide
+let g:indent_guides_start_level = 2
+let indent_guides_guide_size = 1
+
+
 " Hardmode
 let g:HardMode_level = 'wannabe'
 let g:HardMode_hardmodeMsg = "Don't use this!"
@@ -123,10 +153,10 @@ let g:xml_syntax_folding = 1
 let g:user_emmet_mode='a'
 let g:user_emmet_leader_key='<C-Z>'
 let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-    \      'extends' : 'jsx',
-    \  },
-  \}
+      \  'javascript.jsx' : {
+      \      'extends' : 'jsx',
+      \  },
+      \}
 
 " Ack.vim
 set runtimepath^=~/.vim/bundle/ag
@@ -139,6 +169,7 @@ endif
 let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
 let g:airline#extensions#cursormode#enabled=0
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_theme="base16"
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 let g:airline_powerline_fonts=1
@@ -146,8 +177,13 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
+"let g:airline_section_b = '%{strftime("%c")}'
+let g:airline_section_y = 'BN: %{bufnr("%")}'
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline_statusline_ontop = 0
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
@@ -169,4 +205,40 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-highlight Comment cterm=italic
+" Go/golang specific settings. Works for any programming language other than Go
+" at this time.
+autocmd BufEnter *.go  setlocal tabstop=8 shiftwidth=8 softtabstop=8 textwidth=80 noexpandtab cindent cinoptions=:0,l1,t0,g0,(0,W8 filetype=go
+
+let g:vim_jsx_pretty_highlight_close_tag = 1
+
+let g:fixmyjs_use_local = 1
+
+noremap <Leader><Leader>l :ALELint<CR>
+noremap <Leader><Leader>f :ALEFix<CR>
+let g:ale_set_highlights = 0
+let g:ale_sign_column_always = 1
+"let g:ale_ruby_rubocop_executable = 'bundle'
+let g:ale_fixers = {
+      \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \   'ruby': ['rubocop'],
+      \   'javascript': ['eslint'],
+      \ }
+
+let g:ale_linters = {
+      \   'ruby': ['rubocop'],
+      \   'python': ['flake8', 'pylint'],
+      \   'javascript': ['eslint'],
+      \}
+
+" Svelte
+let g:vim_svelte_plugin_load_full_syntax = 1
+
+" vim-ruby indent
+let g:ruby_indent_block_style = 'do'
+let g:ruby_indent_assignment_style = 'hanging'
+let g:ruby_indent_hanging_elements = 1
+let ruby_operators        = 1
+let ruby_pseudo_operators = 1
+let ruby_space_errors = 1
+let ruby_line_continuation_error = 1
+let ruby_global_variable_error   = 1

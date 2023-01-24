@@ -46,11 +46,11 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 set background=dark
-hi LineNr term=bold cterm=bold ctermfg=7
+hi LineNr term=bold cterm=bold ctermfg=8
 hi CursorLine cterm=bold ctermbg=19
 hi CursorLineNr term=bold cterm=bold ctermfg=255
 hi ColorColumn ctermbg=8
-hi Comment ctermfg=13 ctermbg=0 cterm=bold
+hi Comment ctermfg=8 ctermbg=0 cterm=bold
 
 " Misc
 

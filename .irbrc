@@ -1,3 +1,5 @@
+require 'reline'
+
 # Autocomplete BG fix
 Reline.core.add_dialog_proc(
   :autocomplete,

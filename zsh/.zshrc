@@ -45,10 +45,11 @@ export MOZ_X11_EGL=1
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="muse"  # "honukai"
+ZSH_THEME="oxide"
 export USE_CCACHE=1
 unsetopt auto_cd
 CASE_SENSITIVE="true"
+
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
@@ -93,7 +94,7 @@ bindkey '[D' backward-word
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git vi-mode)
-MODE_INDICATOR="%F{red}NORMAL%f"
+# MODE_INDICATOR="%F{red}*%f"
 ZVM_CURSOR_STYLE_ENABLED=false
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
@@ -106,7 +107,6 @@ export PATH="/opt/firefox:$PATH"
 
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source $ZSH/oh-my-zsh.sh
-
 #Compilation flags
 export ARCHFLAGS="-arch x86_64"
 
@@ -126,7 +126,6 @@ alias weather='curl wttr.in'
 alias tobrl='/home/tiago/bin/projects/ruby/tobrl'
 alias yay='paru'
 alias yth264='mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080][fps<=30]+bestaudio[ext=m4a]"'
-alias cat='bat '
 
 function mcd() {
   mkdir -p "$1"

@@ -1,6 +1,6 @@
 # dotfiles
 
-My dotfiles as of `2023-04-10`
+My dotfiles as of `2023-06-20`
 
 ## [VIm](https://vim.org)
 - .vimrc
@@ -42,6 +42,7 @@ My dotfiles as of `2023-04-10`
 ## Misc
 - Build configuration for ffmpeg
 - No tear fix for GNOME
+- Clean blank ad space on Spotify
 
 ## _etc..._
 - Run `# sync; echo 3 > /proc/sys/vm/drop_caches` in order to free _some_ memory.

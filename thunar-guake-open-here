@@ -1,0 +1,1 @@
+tmux neww -c %f && guake --toggle

@@ -6,6 +6,8 @@ set hidden
 set number
 " set relativenumber
 set nocompatible
+" no newline. TBH, I've never had issues with this until Node
+set nofixendofline
 set nobackup
 set nowb
 set noswapfile
@@ -41,16 +43,22 @@ cmap <esc>OF <end>
 imap <esc>OF <end>
 
 " Colors
+" let g:gruvbox_contrast_dark = 'hard'
+" let g:gruvbox_transparent_bg = 1
+" let g:gruvbox_italic = 1
+" let g:srcery_italic = 1
 if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
+   let base16colorspace=256
+   source ~/.vimrc_background
+ endif
 set background=dark
-hi LineNr term=bold cterm=bold ctermfg=8
+hi LineNr term=bold cterm=bold ctermfg=20
 hi CursorLine cterm=bold ctermbg=19
 hi CursorLineNr term=bold cterm=bold ctermfg=255
 hi ColorColumn ctermbg=8
-hi Comment ctermfg=8 ctermbg=0 cterm=bold
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+hi Comment ctermfg=20 ctermbg=none cterm=italic
 
 " Misc
 
@@ -222,6 +230,7 @@ let g:ale_fixers = {
       \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \   'ruby': ['rubocop'],
       \   'javascript': ['eslint'],
+      \   'python': ['black', 'autopep8'],
       \ }
 
 let g:ale_linters = {
@@ -229,6 +238,13 @@ let g:ale_linters = {
       \   'python': ['flake8', 'pylint'],
       \   'javascript': ['eslint'],
       \}
+let g:ale_echo_cursor = 1
+let g:ale_enabled = 1
+let g:ale_keep_list_window_open = 0
+let g:ale_lint_delay = 200
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 0
+let g:ale_lint_on_text_changed = 1
 
 " Svelte
 let g:vim_svelte_plugin_load_full_syntax = 1
@@ -242,3 +258,13 @@ let ruby_pseudo_operators = 1
 let ruby_space_errors = 1
 let ruby_line_continuation_error = 1
 let ruby_global_variable_error   = 1
+
+" Python Development
+au BufNewFile,BufRead *.py set
+    \ tabstop=4
+    \ softtabstop=4
+    \ shiftwidth=4
+    \ textwidth=79
+    \ expandtab
+    \ autoindent
+    \ fileformat=unix

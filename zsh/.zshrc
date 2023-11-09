@@ -45,7 +45,7 @@ export MOZ_X11_EGL=1
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="oxide"
+ZSH_THEME="muse"
 export USE_CCACHE=1
 unsetopt auto_cd
 CASE_SENSITIVE="true"
@@ -93,7 +93,7 @@ bindkey '[D' backward-word
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode)
+plugins=(poetry git vi-mode)
 # MODE_INDICATOR="%F{red}*%f"
 ZVM_CURSOR_STYLE_ENABLED=false
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
@@ -125,7 +125,7 @@ alias ls='ls --color=auto'
 alias weather='curl wttr.in'
 alias tobrl='/home/tiago/bin/projects/ruby/tobrl'
 alias yay='paru'
-alias yth264='mpv --ytdl-format="bestvideo[ext=mp4][height<=?1080][fps<=30]+bestaudio[ext=m4a]"'
+alias free_ram='sudo bash -c "sync; echo 3 > /proc/sys/vm/drop_caches"'
 
 function mcd() {
   mkdir -p "$1"
@@ -173,3 +173,7 @@ eval "$(rbenv init -)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"

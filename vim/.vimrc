@@ -116,6 +116,7 @@ vnoremap <leader>y "+y
 map <C-J> :bnext<CR>
 map <C-K> :bprev<CR>
 inoremap jk <esc>
+nnoremap bb :bd<CR>
 
 " NERDTree
 let NERDTreeIgnore = ['\.pyc$', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
@@ -223,8 +224,15 @@ let g:fixmyjs_use_local = 1
 
 noremap <Leader><Leader>l :ALELint<CR>
 noremap <Leader><Leader>f :ALEFix<CR>
-let g:ale_set_highlights = 0
+
+let g:ale_floating_preview = 1
+let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
+
+let g:ale_set_balloons = 1
+let g:ale_set_highlights = 1
+let g:ale_set_loclist = 1
 let g:ale_sign_column_always = 1
+"
 "let g:ale_ruby_rubocop_executable = 'bundle'
 let g:ale_fixers = {
       \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -237,6 +245,7 @@ let g:ale_linters = {
       \   'ruby': ['rubocop'],
       \   'python': ['flake8', 'pylint'],
       \   'javascript': ['eslint'],
+      \   'rust': ['analyzer']
       \}
 let g:ale_echo_cursor = 1
 let g:ale_enabled = 1
@@ -245,6 +254,8 @@ let g:ale_lint_delay = 200
 let g:ale_lint_on_enter = 1
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_text_changed = 1
+let g:ale_completion_enabled = 1
+set omnifunc=ale#completion#OmniFunc
 
 " Svelte
 let g:vim_svelte_plugin_load_full_syntax = 1
@@ -268,3 +279,6 @@ au BufNewFile,BufRead *.py set
     \ expandtab
     \ autoindent
     \ fileformat=unix
+
+" Rust Development
+let g:rustfmt_autosave = 1

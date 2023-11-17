@@ -1,12 +1,32 @@
-execute pathogen#infect()
-syntax on
+execut pathogen#infect()
+" transparent bg
+autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+" " For Vim<8, replace EndOfBuffer by NonText
+autocmd vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE"
+    autocmd SourcePost * highlight Normal     ctermbg=NONE guibg=NONE
+            \ |    highlight LineNr     ctermbg=NONE guibg=NONE
+            \ |    highlight SignColumn ctermbg=NONE guibg=NONE
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+" let g:gruvbox_contrast_dark = 'soft'
+" let g:gruvbox_bold=1
+" let g:gruvbox_transparent_bg=1
+" let g:gruvbox_italic=1
+" let g:gruvbox_termcolors=256
+" let g:material_theme_style = 'default' | 'palenight' | 'ocean' | 'lighter' | 'darker' | 'default-community' | 'palenight-community' | 'ocean-community' | 'lighter-community' | 'darker-community'
+let g:material_terminal_italics = 1
+let g:material_theme_style = 'default'
+colorscheme material
+autocmd VimEnter * ++nested colorscheme material
 filetype plugin indent on
-autocmd VimEnter * hi Normal ctermbg=none
+if has('termguicolors')
+  set termguicolors
+endif
+syntax on
+set background=dark
 set hidden
 set number
-" set relativenumber
 set nocompatible
-" no newline. TBH, I've never had issues with this until Node
 set nofixendofline
 set nobackup
 set nowb
@@ -43,22 +63,13 @@ cmap <esc>OF <end>
 imap <esc>OF <end>
 
 " Colors
-" let g:gruvbox_contrast_dark = 'hard'
 " let g:gruvbox_transparent_bg = 1
 " let g:gruvbox_italic = 1
 " let g:srcery_italic = 1
-if filereadable(expand("~/.vimrc_background"))
-   let base16colorspace=256
-   source ~/.vimrc_background
- endif
-set background=dark
-hi LineNr term=bold cterm=bold ctermfg=20
-hi CursorLine cterm=bold ctermbg=19
-hi CursorLineNr term=bold cterm=bold ctermfg=255
-hi ColorColumn ctermbg=8
-let &t_ZH="\e[3m"
-let &t_ZR="\e[23m"
-hi Comment ctermfg=20 ctermbg=none cterm=italic
+" if filereadable(expand("~/.vimrc_background"))
+"    let base16colorspace=256
+"    source ~/.vimrc_background
+"  endif
 
 " Misc
 
@@ -83,7 +94,6 @@ autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 " UI Layout
 set showcmd
 set cursorline
-
 set wildmenu
 set lazyredraw
 set showmatch
@@ -116,7 +126,7 @@ vnoremap <leader>y "+y
 map <C-J> :bnext<CR>
 map <C-K> :bprev<CR>
 inoremap jk <esc>
-nnoremap bb :bd<CR>
+nnoremap bd :bd<CR>
 
 " NERDTree
 let NERDTreeIgnore = ['\.pyc$', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
@@ -179,7 +189,7 @@ let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
 let g:airline#extensions#cursormode#enabled=0
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_theme="base16"
+let g:airline_theme='material'
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
@@ -224,14 +234,13 @@ let g:fixmyjs_use_local = 1
 
 noremap <Leader><Leader>l :ALELint<CR>
 noremap <Leader><Leader>f :ALEFix<CR>
-
+noremap <Leader><Leader>h :ALEHover<CR>
+set ballooneval
+set balloonevalterm
 let g:ale_floating_preview = 1
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
-
 let g:ale_set_balloons = 1
-let g:ale_set_highlights = 1
 let g:ale_set_loclist = 1
-let g:ale_sign_column_always = 1
 "
 "let g:ale_ruby_rubocop_executable = 'bundle'
 let g:ale_fixers = {
@@ -247,14 +256,14 @@ let g:ale_linters = {
       \   'javascript': ['eslint'],
       \   'rust': ['analyzer']
       \}
-let g:ale_echo_cursor = 1
 let g:ale_enabled = 1
 let g:ale_keep_list_window_open = 0
 let g:ale_lint_delay = 200
 let g:ale_lint_on_enter = 1
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_text_changed = 1
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0
+let g:ale_completion_autoimport = 1
 set omnifunc=ale#completion#OmniFunc
 
 " Svelte

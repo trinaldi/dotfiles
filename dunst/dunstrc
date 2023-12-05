@@ -1,0 +1,135 @@
+# vim: ft=cfg
+[global]
+	follow = keyboard
+	close = ctrl+space
+	close_all = ctrl+shift+space
+	history = ctrl+h
+	context = ctrl+shift+period
+	width = (0, 1500)
+	height = 950
+	origin = top-right
+	offset = 48x60
+	scale = 0
+	notification_limit = 10
+	progress_bar = true
+	progress_bar_height = 10
+	progress_bar_frame_width = 1
+	progress_bar_min_width = 150
+	progress_bar_max_width = 300
+	progress_bar_corner_radius = 0
+	icon_corner_radius = 0
+	indicate_hidden = yes
+	transparency = 5
+	separator_height = 2
+	padding = 15
+	horizontal_padding = 15
+	text_icon_padding = 0
+	frame_width = 3
+	frame_color = "#aaaaaa"
+	gap_size = 0
+	separator_color = frame
+	sort = yes
+	idle_threshold = 120
+	font = Iosevka 13
+	line_height = 10
+	markup = full
+	format = "<b><u>%s</u></b>\n%b\n"
+	alignment = left
+	vertical_alignment = top
+	show_age_threshold = 60
+	word_wrap = no
+	ellipsize = end
+	ignore_newline = no
+	stack_duplicates = true
+	hide_duplicate_count = false
+	show_indicators = yes
+	enable_recursive_icon_lookup = true
+	icon_theme = "Papirus"
+	icon_position = left
+	min_icon_size = 48
+	max_icon_size = 128
+	icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+	sticky_history = yes
+	history_length = 50
+	dmenu = /usr/bin/dmenu -i -fn Ubuntu-18 -l 30 -p dunst:
+	browser = firefox
+	always_run_script = true
+	title = Dunst
+
+	class = Dunst
+
+# Define the corner radius of the notification window
+# in pixel size. If the radius is 0, you have no rounded
+# corners.
+# The radius will be automatically lowered if it exceeds half of the
+# notification height to avoid clipping text and/or icons.
+	corner_radius = 9
+
+# Ignore the dbus closeNotification message.
+# Useful to enforce the timeout set by dunst configuration. Without this
+# parameter, an application may close the notification sent before the
+# user defined timeout.
+	ignore_dbusclose = false
+
+### Wayland ###
+# These settings are Wayland-specific. They have no effect when using X11
+
+# Uncomment this if you want to let notications appear under fullscreen
+# applications (default: overlay)
+# layer = top
+
+# Set this to true to use X11 output on Wayland.
+	force_xwayland = false
+
+### Legacy
+
+# Use the Xinerama extension instead of RandR for multi-monitor support.
+# This setting is provided for compatibility with older nVidia drivers that
+# do not support RandR and using it on systems that support RandR is highly
+# discouraged.
+#
+# By enabling this setting dunst will not be able to detect when a monitor
+# is connected or disconnected which might break follow mode if the screen
+# layout changes.
+	force_xinerama = false
+
+### mouse
+
+# Defines list of actions for each mouse event
+# Possible values are:
+# * none: Don't do anything.
+# * do_action: Invoke the action determined by the action_name rule. If there is no
+#              such action, open the context menu.
+# * open_url: If the notification has exactly one url, open it. If there are multiple
+#             ones, open the context menu.
+# * close_current: Close current notification.
+# * close_all: Close all notifications.
+# * context: Open context menu for the notification.
+# * context_all: Open context menu for all notifications.
+# These values can be strung together for each mouse event, and
+# will be executed in sequence.
+	mouse_left_click = do_action, open_url
+	mouse_middle_click = do_action, close_current
+	mouse_right_click = close_current
+
+	[experimental]
+	per_monitor_dpi = false
+
+	[urgency_low]
+	background = "#E5E9F0"
+	foreground = "#2E3440"
+	frame_color = "#2E3440"
+	timeout = 10
+
+	[urgency_normal]
+	background = "#2E3440"
+	foreground = "#BF616A"
+	frame_color = "#BF616A"
+	highlight = "#BF616A"
+	timeout = 10
+
+	[urgency_critical]
+	background = "#ffffff"
+	foreground = "#900000"
+	frame_color = "#900000"
+	timeout = 0

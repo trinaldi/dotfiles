@@ -1,6 +1,6 @@
 # dotfiles
 
-My dotfiles as of `2023-11-30`
+My dotfiles as of `2023-12-05`
 
 ## [VIm](https://vim.org)
 - .vimrc
@@ -38,6 +38,9 @@ My dotfiles as of `2023-11-30`
 
 ## [rofi](https://github.com/davatorium/rofi)
 - `.rasi` file (config)
+
+## [Dunst](https://github.com/dunst-project/dunst)
+- `dunstrc` file (config)
 
 ## Misc
 - Build configuration for ffmpeg

@@ -42,6 +42,8 @@ My dotfiles as of `2024-05-29`
 ## [Dunst](https://github.com/dunst-project/dunst)
 - `dunstrc` file (config)
 
+## Firefox
+- `chrome`folder for styles
 ## Misc
 - Build configuration for ffmpeg
 - No tear fix for GNOME

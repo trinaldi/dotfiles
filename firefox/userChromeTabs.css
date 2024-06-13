@@ -1,0 +1,112 @@
+/*     / //  /  /   ☔ RainFox 5.3 | 2019-2022   //  / /  /     */
+
+/* proton-ish tabs (not disconnected from tabbar anymore; no tab-line; roundness) */
+.tabbrowser-tab {
+	background-color: transparent !important; background-clip: padding-box;
+	overflow: hidden !important;
+}
+.tabbrowser-tab[multiselected], .tabbrowser-tab[visuallyselected="true"] {
+	border-top-left-radius: var(--userChrome-tab-rounding) !important; border-top-right-radius: var(--userChrome-tab-rounding) !important;
+}
+.tab-background, .tab-loading-burst  {
+	border-radius: var(--userChrome-tab-rounding) var(--userChrome-tab-rounding) 0px 0px !important;
+	margin-bottom: -2px !important; /* change this value to make tabs smaller/bigger (container stripes will be broken!!). min = -5; max = 0 */
+}
+
+
+
+/* make gaps between tabs a little bit smaller without breaking the shadow (disabled bc seems to breaking tab overflow, temp fix (breaks the shadow) goes below) 
+.tabbrowser-tab:not([pinned]) {
+	margin-inline: -1px !important;
+} /**/
+.tabbrowser-tab {
+	padding-inline: 1px !important;
+}
+/* make tabs min width a little smaller */
+.tabbrowser-tab {
+  --tab-min-width: 58px !important;
+}
+
+/* smaller gap between pinned and regular tabs */
+#tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab[first-visible-unpinned-tab] {
+	margin-inline-start: 2px !important;
+}
+
+/* fix pinned tabs get shifted to the right if tabbar is overflown. DISABLE if your tabs get shifted to the left (you probably using Firefox 90 release since this shift to the right is actually a Firefox bug) */
+#tabbrowser-tabs[positionpinnedtabs] > #tabbrowser-arrowscrollbox > .tabbrowser-tab[pinned] {
+	transform: translateX(-28px);
+}
+
+
+
+/* force tabs to use toolbar colors -- DISABLE for max compatibility with custom themes */
+#tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab > .tab-stack > .tab-background[multiselected="true"]:-moz-lwtheme, #tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab > .tab-stack > .tab-background[selected="true"]:-moz-lwtheme {
+	background: var(--toolbar-bgcolor) !important;
+}
+
+/* tabs shadow */
+#TabsToolbar #tabbrowser-tabs:not([noshadowfortests]) .tabbrowser-tab:is([visuallyselected="true"], [multiselected]) > .tab-stack > .tab-background:-moz-lwtheme {
+	box-shadow: 0 0 var(--userChrome-tabbar-shadow) 1px var(--tabs-border-color) !important;
+}
+/* legacy tab shadows -- ENABLE for max compatibility with legacy custom themes 
+#TabsToolbar #tabbrowser-tabs:not([noshadowfortests]) .tabbrowser-tab:is([visuallyselected="true"], [multiselected]) > .tab-stack > .tab-background:-moz-lwtheme {
+	box-shadow: 0 0 0px var(--tab-line-color) !important;
+}/**/
+
+/* tabs outline */
+.tab-background {
+	border: 0px solid transparent !important;
+	outline: calc(calc(var(--userChrome-tab-outline-vis) / 1.66) * 3) solid transparent;
+}
+.tab-background:is([selected], [multiselected]):-moz-lwtheme {
+  outline: calc(var(--userChrome-tab-outline-vis) / 1.66) solid currentColor; /* CSS increments any float outline width value up to round number */
+	outline-color: var(--tab-line-color);
+}
+
+
+
+
+/* overflow buttons */
+#scrollbutton-up, #scrollbutton-down {
+	padding: calc(var(--toolbarbutton-inner-padding) - 4px) calc(var(--toolbarbutton-inner-padding) - 8px) !important;
+}
+
+/* close button */
+.tab-close-button {
+	padding: 4px !important;
+	border-radius: 1280px !important;
+	width: 21px !important;	height: 21px !important;
+}
+
+/* old-styled ctrl buttons */
+.tab-secondary-label {
+	display: none !important;
+}
+.tab-icon-overlay {
+	opacity: inherit !important;
+}
+.titlebar-button {
+	padding: 6px 17px;
+}
+.tab-icon-overlay:not([pinned], [sharing], [crashed]):is([soundplaying], [muted], [activemedia-blocked]) {
+	background-color: color-mix(in srgb, currentColor 30%, #9990);
+	border-radius: 1280px !important;
+	margin-top: -1px !important; margin-bottom: -1px !important; margin-inline-end: 4.5px !important;
+	padding: 3px !important; 
+}
+#TabsToolbar .tab-icon-overlay:is([pinned], [sharing]):not([crashed]) {
+	background-color: color-mix(in srgb, currentColor 30%, #9990);
+	border-radius: 1280px !important;
+	stroke: none !important;
+	color: currentColor !important;
+}
+.tab-icon-overlay:not([pinned], [sharing], [crashed]):is([soundplaying], [muted], [activemedia-blocked]):hover, #TabsToolbar .tab-icon-overlay:is([pinned], [sharing]):not([crashed]):hover, .tab-close-button:hover {
+	background-color: color-mix(in srgb, currentColor 15%, #9990) !important;
+}
+.tab-icon-overlay:not([pinned], [sharing], [crashed]):is([soundplaying], [muted], [activemedia-blocked]):hover:active, #TabsToolbar .tab-icon-overlay:is([pinned], [sharing]):not([crashed]):hover:active, .tab-close-button:hover:active {
+	background-color: color-mix(in srgb, currentColor 45%, #9990) !important;
+}
+.tab-icon-overlay:not([pinned]) {
+	width: 18px !important;	height: 18px !important;
+	margin-left: -1px !important;
+}

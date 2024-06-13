@@ -1,0 +1,97 @@
+/*　　　 / //　/　/　 ☔ RainFox | 2019-2022 　//　/ /　 // 　　　*/
+
+#customization-footer {
+	background-color: var(--arrowpanel-background) !important;
+}
+
+/* done button */
+#customization-done-button:-moz-any(:active, :hover):not([disabled]) {
+	background-color: var(--toolbarbutton-icon-fill-attention) !important;
+	filter: brightness(1.2) !important;
+}
+#customization-done-button {
+	color: var(--arrowpanel-color) !important;
+	background-color: var(--toolbarbutton-icon-fill-attention) !important;
+	transition: var(--userChrome-animation-speed) !important;
+	box-shadow: 0px 0px 3px -2px var(--autocomplete-popup-highlight-background) !important;
+}
+
+/* other buttons */
+.customizationmode-checkbox:not(:-moz-lwtheme):not([disabled]), .customizationmode-button {
+	color: var(--arrowpanel-color) !important;
+}
+.checkbox-label {
+	color: var(--arrowpanel-color) !important;
+}
+.customizationmode-button {
+	border: 1px solid transparent !important;
+	background-color: var(--toolbarbutton-hover-background) !important;
+	transition: var(--userChrome-animation-speed) !important;
+}
+.customizationmode-button:-moz-any(:active, :hover):not([disabled]), .customizationmode-button[open], .customizationmode-button[checked] {
+	background-color: var(--toolbarbutton-active-background) !important;
+}
+
+/* pop-ups and other elements */
+#customization-lwtheme-menu-header {
+	margin-top: 0px !important;
+}
+.customization-uidensity-menuitem {
+	height: 44px !important;
+}
+#customization-uidensity-menuitem-compact {
+	margin-top: 5px;
+}
+#fullscr-toggler {
+	background: var(--toolbar-bgcolor) !important;
+}
+
+/* context menu editor */
+.panel-arrowcontent {
+	border-radius: var(--userChrome-cmenu-rounding) !important;
+	padding: 0 !important;
+	background-clip: padding-box;
+	border: 1px solid var(--arrowpanel-border-color);
+	box-shadow: 0 0 4px hsla(0,0%,0%,.2);
+	margin: 4px;
+}
+#customization-panelHolder #widget-overflow-fixed-list toolbarpaletteitem {
+	color: var(--arrowpanel-color) !important;
+}
+#customization-panelHolder #widget-overflow-fixed-list toolbarpaletteitem:hover {
+	background-color: var(--panel-item-hover-bgcolor) !important;
+}
+#customization-panelHolder #widget-overflow-fixed-list toolbarpaletteitem:hover:active {
+	color: var(--panel-item-hover-bgcolor, rgba(127,127,127,0.5)) !important;
+	opacity: 50%;
+}
+#customization-panel-container {
+	padding: 0 var(--customization-panel-padding) !important;
+}
+#customization-panelWrapper > .panel-arrowbox > .panel-arrow[side="top"] {
+	display: none !important;
+}
+#customization-panelHolder {
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+}
+#customization-panelHeader {
+	font-size: 1.8em !important;
+	font-weight: 600 !important;
+	padding: 8px 12px !important;
+	text-align: center;
+}
+#customization-panelDescription {
+	font-size: 1.5em !important;
+	padding: 0 12px 10px !important;
+}
+
+/* unhide amazing whale picture when the menu in empty (why did you remove it, Mozilla? WHY???) */
+#customization-panelHolder > #widget-overflow-fixed-list:empty::before {
+	opacity: 1 !important; 
+}
+
+/* prevent 1px border from blinking when just appeared */
+#customization-panelHolder > #widget-overflow-fixed-list:empty {
+	border-top: 1px solid transparent !important;
+}

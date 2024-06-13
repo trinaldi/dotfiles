@@ -1,0 +1,65 @@
+/*     / //  /  /   ☔ RainFox 5.3 | 2019-2022   //  / /  /     */
+
+#navigator-toolbox {
+	--tabs-border-color: #4442 !important; /* do not use any theme colors for tab and tabbar shadow */
+	border-bottom: 0px solid var(--toolbar-bgcolor) !important; /* remove 1px line under navbar */
+}
+
+/* tabbar shadow */
+#nav-bar {
+	box-shadow: 0 -1px var(--userChrome-tabbar-shadow) var(--tabs-border-color) !important;
+}
+
+/* tabbar outline */
+#nav-bar {
+  outline: calc(var(--userChrome-tab-outline-vis) - 1px) solid currentColor;
+	outline-color: var(--tab-line-color);
+}
+
+/* remove gap before tabs */
+.titlebar-spacer[type="pre-tabs"] {
+	border-inline-end: 0px !important;
+	width: 0px !important;
+}
+
+.tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
+	padding-right: var(--userChrome-tab-rounding) !important;
+}
+#TabsToolbar .toolbarbutton-1 {
+	margin: 0 0 !important;
+}
+
+/* small gap between menu btn and other btns */
+#PanelUI-button {
+	margin-left: 6px !important;
+}
+
+/* smaller toolbarbuttons and tabbarbuttons */
+#TabsToolbar .toolbarbutton-1 > .toolbarbutton-icon, #alltabs-button .toolbarbutton-badge-stack {
+	width: calc(2 * var(--toolbarbutton-inner-padding) + 12px) !important;
+	height: calc(2 * var(--toolbarbutton-inner-padding) + 12px) !important;
+	padding: calc((var(--tab-min-height) - 20px) / 2) !important;
+}
+#TabsToolbar .toolbarbutton-1 > .toolbarbutton-icon, #TabsToolbar .toolbarbutton-1 > .toolbarbutton-text, #TabsToolbar .toolbarbutton-1 > .toolbarbutton-badge-stack {
+	border-radius: var(--tab-border-radius) !important;
+	padding: calc( var(--toolbarbutton-inner-padding) - 2px) !important;
+}
+toolbar .toolbarbutton-1 {
+	padding: 2px 2px !important;
+}
+#nav-bar-customization-target > :is(toolbarbutton, toolbaritem):first-child, #nav-bar-customization-target > toolbarpaletteitem:first-child > :is(toolbarbutton, toolbaritem) {
+	padding-inline-start: 4px !important;
+}
+#PanelUI-menu-button {
+	padding-inline-end: 4px !important;
+}
+
+
+/* tabbar icon notification */
+.webextension-browser-action .toolbarbutton-badge {
+	padding: 1px 2px 3px !important;
+	border-radius: 1280px !important;
+	box-shadow: 0px 1px 2px 1px #0002 !important;
+	max-width: 40px !important;
+	font-size: 9.6px !important;
+}

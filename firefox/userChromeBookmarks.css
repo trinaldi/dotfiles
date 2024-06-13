@@ -1,0 +1,22 @@
+/*     / //  /  /   ☔ RainFox 5.3 | 2019-2022   //  / /  /     */
+
+/* center bookmarks */
+#PlacesToolbarItems {
+	justify-content: center !important;
+	display: flex !important;
+	overflow: hidden !important;
+	margin-top: -2px; margin-bottom: 2px;
+}
+	
+/* show/hide animation */
+#PersonalToolbar {
+	visibility: collapse !important;
+	transform: translateY(-30%) !important;
+	transition: var(--userChrome-animation-speed) !important;
+	opacity: 0% !important;
+}
+#navigator-toolbox:hover > #PersonalToolbar, #navigator-toolbox:focus > #PersonalToolbar, #navigator-toolbox:focus-within > #PersonalToolbar {
+	visibility: visible !important; 
+	transform: translateY(0%) !important;
+	opacity: 100% !important;
+}

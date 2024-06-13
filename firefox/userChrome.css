@@ -1,0 +1,85 @@
+/*   /   /  //   /    /  /     /  /    /   /       /   
+/______   / / __    /   _____ .. /. ___  ___  /   /   /
+|      \.--.-(ЖЖ)-----./  __/ ЖЖЖЖЖ \  \/  / /  5.3  / 
+|      /     |  |  .  |   _| ЖЖЖЖЖЖЖ /    /  2019-2022 
+|__|\__\___._|__|__|__|__|      J   /__/\__\      /   /
+  --  info and updates: github.com/1280px/rainfox  --  
+
+To disable/enable some part of the style, add/remove "/* " before its @import. Example:
+
+@import "userChromeReplaceEverythingWithPizza.css"                [ ENABLED ]
+
+/* @import "userChromeReplaceEverythingWithPizza.css"             [ DISABLED ]
+
+
+
+
+
+/* ### ###     Configure Variables      ### ### */
+@import "userChromeVariables.css";
+
+
+
+
+
+/* ### ###  Elem Animations & Rounding  ### ### */
+@import "userChromeAnimations.css";
+
+
+/* ### ###    PhotonUI icons (.icon)    ### ### */
+
+
+/* ### ###   Hide Bloaty/Useless Opts   ### ### */
+
+
+
+
+
+/* ### ###     Legacy Context Menus     ### ### */
+/*@import "userChromeContextMenus.css";*/
+
+
+/* ### ###   ArrowPanel Context Menus   ### ### */
+
+
+/* ### ###   Adaptive Downloads Panel   ### ### */
+
+
+
+
+
+/* ### ###   Photon-like Rounded Tabs   ### ### */
+@import "userChromeTabs.css";
+
+
+/* ### ###  Various Tabbar-rel Changes  ### ### */
+@import "userChromeTabbar.css";
+
+
+/* ###   Tab Container Line/Cover Control   ### */
+@import "userChromeTabContainers.css";
+
+
+/* ###   Hourglass Tabs Loading Animation   ### */
+
+
+/* ###   Autohide Tab Names until Hovered   ### */
+/* @import "userChromeTabParanoia.css";
+
+
+
+
+
+/* ###  Centered Autohide Bookmark Toolbar  ### */
+
+
+/* ### ###  Menubar Animation & Shadow  ### ### */
+
+
+/* ### ###   Navigation Btns Features   ### ### */
+
+
+/* ### ##  Adaptive 'Customize...' Page  ## ### */
+
+
+/* ### ###     Small URLbar Changes     ### ### */

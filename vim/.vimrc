@@ -1,40 +1,53 @@
 execut pathogen#infect()
+let g:deoplete#enable_at_startup = 1
+" let g:srcery_italic = 1
+" let g:gruvbox_contrast_dark = 'hard'
+" let g:gruvbox_bold=1
+" let g:gruvbox_transparent_bg=1
+" let g:gruvbox_italic=1
+" let g:gruvbox_termcolors=256
+" let g:vim_monokai_tasty_italic = 1
+" let g:vim_monokai_tasty_machine_tint = 1
+" let g:vim_monokai_tasty_highlight_active_window = 1
+let g:airline#extensions#tmuxline#enabled = 0
+let g:tmuxline_theme = 'zenburn'
+syntax on
+set background=dark
+colorscheme onedark
+set updatetime=100
+vnoremap <leader>p "_dP"
+
+filetype plugin indent on
+
+if has('termguicolors')
+  set termguicolors
+endif
+
+set hidden
+set number
+
 " transparent bg
 autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
 " " For Vim<8, replace EndOfBuffer by NonText
 autocmd vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE"
     autocmd SourcePost * highlight Normal     ctermbg=NONE guibg=NONE
-            \ |    highlight LineNr     ctermbg=NONE guibg=NONE
-            \ |    highlight SignColumn ctermbg=NONE guibg=NONE
+
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
-" let g:gruvbox_contrast_dark = 'soft'
-" let g:gruvbox_bold=1
-" let g:gruvbox_transparent_bg=1
-" let g:gruvbox_italic=1
-" let g:gruvbox_termcolors=256
-" let g:material_theme_style = 'default' | 'palenight' | 'ocean' | 'lighter' | 'darker' | 'default-community' | 'palenight-community' | 'ocean-community' | 'lighter-community' | 'darker-community'
-let g:material_terminal_italics = 1
-let g:material_theme_style = 'default'
-colorscheme material
-autocmd VimEnter * ++nested colorscheme material
-filetype plugin indent on
-if has('termguicolors')
-  set termguicolors
-endif
-syntax on
-set background=dark
-set hidden
-set number
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+hi LineNr term=bold cterm=bold ctermfg=20
+hi CursorLine cterm=none ctermbg=20
+hi CursorLineNr term=bold cterm=bold ctermfg=255
+hi Comment ctermfg=20 ctermbg=none cterm=italic
+hi ColorColumn ctermbg=8
+hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
 set nocompatible
 set nofixendofline
 set nobackup
 set nowb
 set noswapfile
-
-" Show tabs and trailing spaces
-set list
-set lcs=tab:»_,trail:·
 
 " Search down into subfolders
 " Provides tab-completion for all file-related tasks
@@ -61,15 +74,6 @@ imap <esc>OH <home>
 map <esc>OF <end>
 cmap <esc>OF <end>
 imap <esc>OF <end>
-
-" Colors
-" let g:gruvbox_transparent_bg = 1
-" let g:gruvbox_italic = 1
-" let g:srcery_italic = 1
-" if filereadable(expand("~/.vimrc_background"))
-"    let base16colorspace=256
-"    source ~/.vimrc_background
-"  endif
 
 " Misc
 
@@ -140,11 +144,11 @@ augroup configgroup
   autocmd BufEnter Makefile setlocal noexpandtab
   au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 augroup END
+
 set pastetoggle=<F2>
+
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ale_sign_error = '●' " Less aggressive than the default '>>'
-let g:ale_sign_warning = '.'
-let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
+
 function RspecOnLine()
   !rspec %
 endfunction
@@ -189,7 +193,7 @@ let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
 let g:airline#extensions#cursormode#enabled=0
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_theme='material'
+let g:airline_theme='monokai_tasty'
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
@@ -234,6 +238,7 @@ let g:fixmyjs_use_local = 1
 
 noremap <Leader><Leader>l :ALELint<CR>
 noremap <Leader><Leader>f :ALEFix<CR>
+noremap <Leader><Leader>d :ALEGoToDefinition<CR>
 noremap <Leader><Leader>h :ALEHover<CR>
 set ballooneval
 set balloonevalterm
@@ -246,25 +251,32 @@ let g:ale_set_loclist = 1
 let g:ale_fixers = {
       \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \   'ruby': ['rubocop'],
-      \   'javascript': ['eslint'],
+      \   'javascript': ['eslint', 'prettier'],
+      \   'typescript': ['prettier', 'eslint'],
       \   'python': ['black', 'autopep8'],
+      \   'rust': ['rustfmt']
       \ }
 
 let g:ale_linters = {
       \   'ruby': ['rubocop'],
       \   'python': ['flake8', 'pylint'],
-      \   'javascript': ['eslint'],
+      \   'typescript': ['prettier','tsserver','eslint'],
+      \   'javascript': ['eslint', 'prettier'],
       \   'rust': ['analyzer']
       \}
+let g:ale_sign_error = '🐞' " Less aggressive than the default '>>'
+let g:ale_sign_warning = '⚠️'
+let g:ale_sign_info = 'i'
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = "🔥 "
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
 let g:ale_enabled = 1
 let g:ale_keep_list_window_open = 0
 let g:ale_lint_delay = 200
 let g:ale_lint_on_enter = 1
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_text_changed = 1
-let g:ale_completion_enabled = 0
-let g:ale_completion_autoimport = 1
-set omnifunc=ale#completion#OmniFunc
 
 " Svelte
 let g:vim_svelte_plugin_load_full_syntax = 1
@@ -291,3 +303,34 @@ au BufNewFile,BufRead *.py set
 
 " Rust Development
 let g:rustfmt_autosave = 1
+" delete without yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" replace currently selected text with default register
+" without yanking it
+vnoremap <leader>p "_dP
+
+nnoremap <C-o><C-u> :OmniSharpFindUsages<CR>
+nnoremap <C-o><C-d> :OmniSharpGotoDefinition<CR>
+nnoremap <C-o><C-d><C-p> :OmniSharpPreviewDefinition<CR>
+nnoremap <C-o><C-r> :!dotnet run
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+" javascript import
+let g:vim_javascript_imports_map = '<Leader>e'

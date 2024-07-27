@@ -1,19 +1,12 @@
 execut pathogen#infect()
 let g:deoplete#enable_at_startup = 1
-" let g:srcery_italic = 1
-" let g:gruvbox_contrast_dark = 'hard'
-" let g:gruvbox_bold=1
-" let g:gruvbox_transparent_bg=1
-" let g:gruvbox_italic=1
-" let g:gruvbox_termcolors=256
-" let g:vim_monokai_tasty_italic = 1
-" let g:vim_monokai_tasty_machine_tint = 1
-" let g:vim_monokai_tasty_highlight_active_window = 1
-let g:airline#extensions#tmuxline#enabled = 0
-let g:tmuxline_theme = 'zenburn'
+let base16colorspace=256
+colorscheme base16-onedark
+let g:airline_theme='base16'
+let g:airline#extensions#tmuxline#enabled = 1
+let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 syntax on
 set background=dark
-colorscheme onedark
 set updatetime=100
 vnoremap <leader>p "_dP"
 
@@ -34,8 +27,6 @@ autocmd vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE"
 
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
 hi LineNr term=bold cterm=bold ctermfg=20
 hi CursorLine cterm=none ctermbg=20
 hi CursorLineNr term=bold cterm=bold ctermfg=255
@@ -193,8 +184,6 @@ let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
 let g:airline#extensions#cursormode#enabled=0
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_theme='monokai_tasty'
-let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ''

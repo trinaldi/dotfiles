@@ -1,7 +1,8 @@
 execut pathogen#infect()
 let g:deoplete#enable_at_startup = 1
 let base16colorspace=256
-colorscheme base16-onedark
+colorscheme onedark
+hi Normal ctermbg=0
 let g:airline_theme='base16'
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
@@ -9,6 +10,8 @@ syntax on
 set background=dark
 set updatetime=100
 vnoremap <leader>p "_dP"
+set swapfile
+set dir=~/.swap-files
 
 filetype plugin indent on
 
@@ -17,10 +20,9 @@ if has('termguicolors')
 endif
 
 set hidden
-set number
+set relativenumber
 
 " transparent bg
-autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
 " " For Vim<8, replace EndOfBuffer by NonText
 autocmd vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE"
     autocmd SourcePost * highlight Normal     ctermbg=NONE guibg=NONE
@@ -109,6 +111,11 @@ nnoremap <space> za
 let mapleader=","
 nnoremap <leader>w :NERDTree<CR>
 silent! map <F5> :NERDTreeToggle<CR>
+nnoremap <leader>t :TestNearest<CR>
+nnoremap <leader>T :TestFile<CR>
+nnoremap <leader>a :TestSuite<CR>
+nnoremap <leader>l :TestLast<CR>
+nnoremap <leader>g :TestVisit<CR>
 silent! map <F6> :call RunNearestSpec()<CR>
 silent! map <F7> :call RunCurrentSpecFile()<CR>
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
@@ -116,7 +123,7 @@ nnoremap <leader>ez :vsp ~/.zshrc<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader><space> :noh<CR>
 nnoremap <leader>a :Ack
-nnoremap <leader>t :GoTest<CR>
+autocmd FileType go nnoremap <leader>t :GoTest<CR>
 vnoremap <leader>y "+y
 map <C-J> :bnext<CR>
 map <C-K> :bprev<CR>
@@ -236,7 +243,7 @@ let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
 let g:ale_set_balloons = 1
 let g:ale_set_loclist = 1
 "
-"let g:ale_ruby_rubocop_executable = 'bundle'
+let g:ale_ruby_rubocop_executable = 'bundle'
 let g:ale_fixers = {
       \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \   'ruby': ['rubocop'],
@@ -253,8 +260,9 @@ let g:ale_linters = {
       \   'javascript': ['eslint', 'prettier'],
       \   'rust': ['analyzer']
       \}
-let g:ale_sign_error = '🐞' " Less aggressive than the default '>>'
-let g:ale_sign_warning = '⚠️'
+hi SpellBad cterm=underline ctermfg=red ctermbg=NONE
+let g:ale_sign_error = 'E' " Less aggressive than the default '>>'
+let g:ale_sign_warning = 'W'
 let g:ale_sign_info = 'i'
 let g:ale_virtualtext_cursor = 1
 let g:ale_virtualtext_prefix = "🔥 "
@@ -323,3 +331,21 @@ endif
 
 " javascript import
 let g:vim_javascript_imports_map = '<Leader>e'
+
+" vim-snippets
+" Specify the snippet directories
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'vim-snippets']
+
+" Trigger key for expanding snippets
+let g:UltiSnipsExpandTrigger = '<Tab>'
+let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+
+" Enable UltiSnips in all filetypes
+autocmd FileType * UltiSnipsAddFiletypes all
+
+command! Snippets call fzf#run({
+      \ 'source': 'find ~/.vim/bundle/vim-snippets -name "*.snippets" -print',
+      \ 'sink':   'e',
+      \ 'options': '--preview "cat {} | head -n 20"'
+      \ })

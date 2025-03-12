@@ -15,6 +15,7 @@ require("lazy").setup({
   -- Colorscheme
   { "folke/tokyonight.nvim" },
 
+
   -- LSP and Autocompletion
   { "neovim/nvim-lspconfig" },
   { "hrsh7th/nvim-cmp" },
@@ -33,6 +34,7 @@ require("lazy").setup({
   { "tpope/vim-endwise" },
   { "tpope/vim-rake" },
   { "tpope/vim-dispatch" },
+  { "RRethy/nvim-treesitter-endwise"},
 
   -- Testing
   { "vim-test/vim-test" },
@@ -54,7 +56,7 @@ require("lazy").setup({
     config = function()
       require("bufferline").setup {
         options = {
-          numbers = "none", -- You can use "ordinal", "buffer_id", or "both" for displaying numbers
+          numbers = "buffer_id", -- You can use "ordinal", "buffer_id", or "both" for displaying numbers
           close_command = "bdelete %d", -- Command to close buffer
           right_mouse_command = "bdelete %d", -- Command to close buffer on right-click
           indicator = {
@@ -73,9 +75,12 @@ require("lazy").setup({
       }
     end
   },
-
-
 })
+
+require("tokyonight").setup({
+  transparent = true,
+})
+vim.cmd [[colorscheme tokyonight]]
 
 -- Basic settings
 vim.opt.number = true
@@ -120,7 +125,7 @@ require("nvim-treesitter.configs").setup({
 -- Rails navigation
 vim.api.nvim_set_keymap("n", "<leader>a", ":A<CR>", { noremap = true, silent = true })
 
--- Run Tests
+-- nvim keymaps
 vim.api.nvim_set_keymap("n", "<leader>t", ":TestNearest<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>T", ":TestFile<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>l", ":TestLast<CR>", { noremap = true, silent = true })
@@ -134,6 +139,7 @@ vim.api.nvim_set_keymap("n", "K", ":lua vim.lsp.buf.hover()<CR>", { noremap = tr
 vim.api.nvim_set_keymap("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.format()<CR>", { noremap = true, silent = true })
-vim.api.nvim_command([[
-  autocmd BufWritePre *.rb lua vim.lsp.buf.formatting_sync()
-]])
+vim.keymap.set("n", "<C-j>", ":bnext<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-k>", ":bprevious<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "bd", ":bd<CR>", { noremap = true, silent = true })
+

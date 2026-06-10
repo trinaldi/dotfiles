@@ -1,9 +1,13 @@
 # dotfiles
 
-My dotfiles as of `2024-06-13`
+My dotfiles as of `2026-06-10`
 
 ## [VIm](https://vim.org)
 - .vimrc
+- plugins
+
+## [NeoVim](https://neovim.io/)
+- init.lua
 - plugins
 
 ## [zsh](https://zsh.org) and [themes](https://ohmyz.sh)

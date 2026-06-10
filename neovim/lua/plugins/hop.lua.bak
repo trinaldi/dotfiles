@@ -1,0 +1,10 @@
+return {
+  "phaazon/hop.nvim",
+  branch = "*",
+  config = function()
+    require("hop").setup { keys = "etovxqpdygfblzhckisuran" }
+    -- Você pode configurar teclas de atalho aqui, por exemplo:
+    vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>HopWord<cr>", { silent = true })
+    vim.api.nvim_set_keymap("n", "<leader>l", "<cmd>HopLineStart<cr>", { silent = true })
+  end
+}

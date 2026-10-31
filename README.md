@@ -1,6 +1,6 @@
 # dotfiles
 
-My dotfiles as of `2026-06-10`
+My dotfiles as of `2026-10-31`
 
 ## [VIm](https://vim.org)
 - .vimrc
@@ -35,7 +35,7 @@ My dotfiles as of `2026-06-10`
 - `config` file for [i3-gaps-rounded](https://github.com/resloved/i3) but it works with regular `i3` and `i3` gaps (assuming you remove/comment the specific lines for said `i3` flavor)
 
 ## [fzf - fuzzy finder](https://github.com/junegunn/fzf)
-- Both `fzf` folder and `.fzf.zsh` that is called in `~/.zshrc`. With this bindings such as <C>+r works with fzf functionality.  
+- Both `fzf` folder and `.fzf.zsh` that is called in `~/.zshrc`. With this bindings such as <C>+r works with fzf functionality.
 
 ## [picom/compton](https://github.com/yshui/picom)
 - `conf` file for [compton](https://aur.archlinux.org/packages/compton-tryone-git/) - tryone's patched fork of compton with kawase blur, actually

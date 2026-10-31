@@ -1,17 +1,26 @@
 execut pathogen#infect()
 let g:deoplete#enable_at_startup = 1
+colorscheme gruvbox
+let g:airline_theme = 'onedark'
 let base16colorspace=256
-colorscheme onedark
+let g:gruvbox_italic=1
 hi Normal ctermbg=0
-let g:airline_theme='base16'
-let g:airline#extensions#tmuxline#enabled = 1
-let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
+"let g:airline#extensions#tmuxline#enabled = 0
+"let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
+let g:tmuxline_auto = 0
 syntax on
 set background=dark
 set updatetime=100
 vnoremap <leader>p "_dP"
 set swapfile
 set dir=~/.swap-files
+vnoremap <C-c> "+y
+
+"if exists('$BASE16_THEME')
+"      \ && (!exists('g:colors_name') || g:colors_name != 'base16-$BASE16_THEME')
+"    let base16colorspace=256
+"    colorscheme base16-$BASE16_THEME
+"endif
 
 filetype plugin indent on
 
@@ -25,7 +34,7 @@ set relativenumber
 " transparent bg
 " " For Vim<8, replace EndOfBuffer by NonText
 autocmd vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE"
-    autocmd SourcePost * highlight Normal     ctermbg=NONE guibg=NONE
+autocmd SourcePost * highlight Normal     ctermbg=NONE guibg=NONE
 
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
@@ -87,6 +96,32 @@ filetype plugin on
 autocmd FileType c setlocal shiftwidth=8 softtabstop=8 expandtab
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType cs setlocal tabstop=4 shiftwidth=4 expandtab
+
+" Ruby
+if executable('solargraph')
+  augroup LspRuby
+    autocmd!
+    autocmd User lsp_setup call lsp#register_server({
+      \ 'name': 'solargraph',
+      \ 'cmd': {server_info->['solargraph', 'stdio']},
+      \ 'allowlist': ['ruby'],
+      \ })
+  augroup END
+endif
+let ruby_no_expensive = 0
+let ruby_fold = 1
+let ruby_space_errors = 1
+syntax match rubyCustomMethodDef /\vdef\s+\zs\w+/
+highlight link rubyCustomMethodDef Function
+syntax match rubyCustomMethodCall /\v\.\zs\w+/
+highlight link rubyCustomMethodCall Identifier
+syntax match rubyCustomSymbol /\v:\w+/
+highlight link rubyCustomSymbol Constant
+syntax match rubyCustomConstant /\v<[A-Z]\w*>/
+highlight link rubyCustomConstant Type
+syntax keyword rubyRailsMacro before_action has_many belongs_to scope validates
+highlight link rubyRailsMacro Keyword
 
 " UI Layout
 set showcmd
@@ -113,9 +148,6 @@ nnoremap <leader>w :NERDTree<CR>
 silent! map <F5> :NERDTreeToggle<CR>
 nnoremap <leader>t :TestNearest<CR>
 nnoremap <leader>T :TestFile<CR>
-nnoremap <leader>a :TestSuite<CR>
-nnoremap <leader>l :TestLast<CR>
-nnoremap <leader>g :TestVisit<CR>
 silent! map <F6> :call RunNearestSpec()<CR>
 silent! map <F7> :call RunCurrentSpecFile()<CR>
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
@@ -123,12 +155,11 @@ nnoremap <leader>ez :vsp ~/.zshrc<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader><space> :noh<CR>
 nnoremap <leader>a :Ack
-autocmd FileType go nnoremap <leader>t :GoTest<CR>
 vnoremap <leader>y "+y
 map <C-J> :bnext<CR>
 map <C-K> :bprev<CR>
 inoremap jk <esc>
-nnoremap bd :bd<CR>
+"nnoremap bd :bd<CR>
 
 " NERDTree
 let NERDTreeIgnore = ['\.pyc$', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
@@ -185,6 +216,11 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+endif
+
+
 " air-line
 " required if using https://github.com/bling/vim-airline
 let g:airline#extensions#hunks#enabled=1
@@ -195,7 +231,6 @@ let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
-let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
 "let g:airline_section_b = '%{strftime("%c")}'
 let g:airline_section_y = 'BN: %{bufnr("%")}'
@@ -229,15 +264,19 @@ let g:airline_symbols.linenr = ''
 autocmd BufEnter *.go  setlocal tabstop=8 shiftwidth=8 softtabstop=8 textwidth=80 noexpandtab cindent cinoptions=:0,l1,t0,g0,(0,W8 filetype=go
 
 let g:vim_jsx_pretty_highlight_close_tag = 1
+autocmd BufWritePre *.ts,*.tsx,*.js,*.jsx PrettierAsync
 
 let g:fixmyjs_use_local = 1
 
 noremap <Leader><Leader>l :ALELint<CR>
 noremap <Leader><Leader>f :ALEFix<CR>
 noremap <Leader><Leader>d :ALEGoToDefinition<CR>
+noremap <Leader><Leader>t :ALEGoToImplementation<CR>
 noremap <Leader><Leader>h :ALEHover<CR>
+noremap <Leader><Leader>i :ALEImport<CR>
 set ballooneval
 set balloonevalterm
+set omnifunc=ale#completion#OmniFunc
 let g:ale_floating_preview = 1
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
 let g:ale_set_balloons = 1
@@ -247,18 +286,20 @@ let g:ale_ruby_rubocop_executable = 'bundle'
 let g:ale_fixers = {
       \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \   'ruby': ['rubocop'],
-      \   'javascript': ['eslint', 'prettier'],
-      \   'typescript': ['prettier', 'eslint'],
+      \   'javascript': ['eslint', 'prettier', 'import'],
+      \   'typescript': ['prettier', 'eslint', 'import'],
+      \   'typescriptreact': ['prettier', 'eslint', 'import'],
       \   'python': ['black', 'autopep8'],
       \   'rust': ['rustfmt']
       \ }
-
+let g:ale_fix_on_save = 1
 let g:ale_linters = {
-      \   'ruby': ['rubocop'],
+      \   'ruby': ['rubocop', 'solargraph'],
       \   'python': ['flake8', 'pylint'],
       \   'typescript': ['prettier','tsserver','eslint'],
       \   'javascript': ['eslint', 'prettier'],
-      \   'rust': ['analyzer']
+      \   'rust': ['analyzer'],
+      \   'cs': ['omnisharp']
       \}
 hi SpellBad cterm=underline ctermfg=red ctermbg=NONE
 let g:ale_sign_error = 'E' " Less aggressive than the default '>>'
@@ -308,11 +349,6 @@ vnoremap <leader>d "_d
 " without yanking it
 vnoremap <leader>p "_dP
 
-nnoremap <C-o><C-u> :OmniSharpFindUsages<CR>
-nnoremap <C-o><C-d> :OmniSharpGotoDefinition<CR>
-nnoremap <C-o><C-d><C-p> :OmniSharpPreviewDefinition<CR>
-nnoremap <C-o><C-r> :!dotnet run
-
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
@@ -332,20 +368,80 @@ endif
 " javascript import
 let g:vim_javascript_imports_map = '<Leader>e'
 
-" vim-snippets
-" Specify the snippet directories
-let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'vim-snippets']
-
-" Trigger key for expanding snippets
-let g:UltiSnipsExpandTrigger = '<Tab>'
-let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
-
-" Enable UltiSnips in all filetypes
-autocmd FileType * UltiSnipsAddFiletypes all
-
 command! Snippets call fzf#run({
       \ 'source': 'find ~/.vim/bundle/vim-snippets -name "*.snippets" -print',
       \ 'sink':   'e',
       \ 'options': '--preview "cat {} | head -n 20"'
       \ })
+
+" Use the silver searcher (ag) if available
+if executable('ag')
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+endif
+
+" Map the FZF command to a key
+nnoremap <C-f> :FZF<CR>
+
+" Use a custom layout
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['grey', 'normal'],
+  \ 'bg':      ['#262626', 'normal'],
+  \ 'hl':      ['#5f87ff', 'Comment'],
+  \ 'fg+':     ['#ffffff', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['#3a3a3a', 'CursorColumn'],
+  \ 'hl+':     ['#ffaf00', 'Statement'],
+  \ 'info':    ['#afaf00', 'PreProc'],
+  \ 'border':  ['grey', 'Ignore'],
+  \ 'prompt':  ['#ff87d7', 'Conditional'],
+  \ 'pointer': ['#ff87d7', 'Exception'],
+  \ 'marker':  ['#00afaf', 'Keyword'],
+  \ 'spinner': ['#00afaf', 'Label'],
+  \ 'header':  ['#9e9e9e', 'Comment'] }
+
+autocmd BufRead,BufNewFile *.ts,*.tsx set filetype=typescriptreact
+
+nnoremap <leader>cf :call CocActionAsync('codeAction')<CR>
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <expr> <TAB> coc#pum#visible() ? coc#pum#confirm() : "\<TAB>"
+
+" Asyncomplete
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_min_chars = 2
+" let g:asyncomplete_popup_delay = 100
+set completeopt=menuone,noinsert,noselect
+
+" Clipboard
+function! XclipAvailable()
+    return executable('xclip') && !empty($DISPLAY)
+endfunction
+
+function! XclipCopy(reg, type, lines)
+    call system('xclip -selection clipboard', join(a:lines, "\n"))
+endfunction
+
+function! XclipPaste(reg)
+    return ['', split(system('xclip -selection clipboard -o'), "\n", 1)]
+endfunction
+
+let v:clipproviders['xclip'] = {
+    \ 'available': function('XclipAvailable'),
+    \ 'copy': {
+    \     '+': function('XclipCopy'),
+    \ },
+    \ 'paste': {
+    \     '+': function('XclipPaste'),
+    \ },
+    \ }
+
+set clipmethod=xclip
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
